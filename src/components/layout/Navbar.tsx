@@ -1,5 +1,5 @@
 
-const imgIdeationStoritelerWebsite1 = "http://localhost:3845/assets/e222db719702e674b33ec082df66e793e45c1e8a.png";
+import imgIdeationStoritelerWebsite1 from "@/assets/navbar-logo.png";
 
 export default function Navbar() {
   return (

@@ -2,8 +2,6 @@
 import CircularGallery from "@/components/ui/CircularGallery"
 
 // Original full-wide image asset previously requested by Figma
-// const imgImage17 = "http://localhost:3845/assets/cc23e900b1d7fd6dac8f5436c9b7fcef16b486ec.png";
-
 export default function ExperienceSection() {
   return (
     <section className="w-full bg-gradient-to-b from-white to-[#f9f9f9] relative overflow-hidden py-24 lg:py-40">

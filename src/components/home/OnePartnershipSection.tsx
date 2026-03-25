@@ -3,17 +3,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatedBeam } from '@/components/ui/animated-beam';
 
-const imgVector = "http://localhost:3845/assets/2fd1dedb64dfcb7d234b18c74354a417244d47e0.svg";
-const imgVector1 = "http://localhost:3845/assets/fbaffc91edc8b1b44341b433e124ec5720085eb4.svg";
-const imgVector2 = "http://localhost:3845/assets/80f0af09ef148845b53d00adf4daaf45eda257ca.svg";
-const imgVector3 = "http://localhost:3845/assets/9da45865d203ab10e42efeca2dbb39c36be35f5f.svg";
-const imgVector4 = "http://localhost:3845/assets/fc9219c2f06a9685097a79450971ef75a3a53c6b.svg";
-const imgVector5 = "http://localhost:3845/assets/6ff263e28e667fd178371ecbc2d288fcf3500fc5.svg";
-const imgVector6 = "http://localhost:3845/assets/7ba87de0aca6f31e26dfe9991fe38728ac7bc7ab.svg";
-const imgVector7 = "http://localhost:3845/assets/b33871279329e9a342cc421d1154cd8d31fc833a.svg";
-const imgVector8 = "http://localhost:3845/assets/fba5d4cf84f716c678da88b08a000143a0cd42ec.svg";
-const imgVector9 = "http://localhost:3845/assets/f09cabd6626b509824040f11db3453e732d25e96.svg";
-const imgVector10 = "http://localhost:3845/assets/1b23c5ca5999d04c8749c570def882f53fdec75d.svg";
+import imgVector from "@/assets/storiteler-logo-white.svg";
+import imgVector1 from "@/assets/node-1.svg";
+import imgVector2 from "@/assets/node-2.svg";
+import imgVector3 from "@/assets/node-3.svg";
+import imgVector4 from "@/assets/node-4.svg";
+import imgVector5 from "@/assets/node-5.svg";
+import imgVector6 from "@/assets/node-6.svg";
+import imgVector7 from "@/assets/node-7.svg";
+import imgVector8 from "@/assets/node-8.svg";
+import imgVector9 from "@/assets/node-9.svg";
+import imgVector10 from "@/assets/node-10.svg";
 
 export default function OnePartnershipSection() {
   const containerRef = useRef<HTMLDivElement>(null);

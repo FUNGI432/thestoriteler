@@ -1,4 +1,4 @@
-const imgNumbers = "http://localhost:3845/assets/accc4ec097c58a52cae7d2c024a81ef52eafa5d5.png";
+import imgNumbers from "@/assets/metrics-bg.png";
 
 const metrics = [
   { value: "4678+", label: "Textile\nBusiness\nConnected" },

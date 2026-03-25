@@ -1,9 +1,9 @@
 // @ts-ignore
 import LogoLoop from "@/components/ui/LogoLoop";
 
-const logo1 = "http://localhost:3845/assets/9002cafa8dac1522b767fcf7fbfbeb9d11a0e1da.svg";
-const logo2 = "http://localhost:3845/assets/2b192aeafa829e40644a1630b5f526573ae2e778.svg";
-const logo3 = "http://localhost:3845/assets/992976782c5efeb09af276b97aea3a7df82d6421.svg";
+import logo1 from "@/assets/hero-logo-1.svg";
+import logo2 from "@/assets/hero-logo-2.svg";
+import logo3 from "@/assets/hero-logo-3.svg";
 
 const imageLogos = [
   { src: logo1, alt: "Logo 1", width: 95, height: 54 },

@@ -1,4 +1,4 @@
-const imgImage15 = "http://localhost:3845/assets/379f3b0eb57a8db2d48a27cea41fb8690f83c109.png";
+import imgImage15 from "@/assets/about-story.png";
 
 export default function AboutSection() {
   return (

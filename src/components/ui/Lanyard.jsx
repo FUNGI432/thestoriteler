@@ -14,6 +14,8 @@ import './Lanyard.css';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
+import newLogoSVG from "@/assets/storiteler-logo-white.svg";
+
 export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], fov = 20, transparent = true, dropped = true }) {
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
@@ -85,7 +87,6 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false, dropped = false }
   const { nodes, materials } = useGLTF(cardGLB);
   
   // Use the new Figma SVG as the decal logo on the card
-  const newLogoSVG = "http://localhost:3845/assets/2fd1dedb64dfcb7d234b18c74354a417244d47e0.svg";
   const texture = useTexture(newLogoSVG);
   
   // Use the default band texture for the lanyard strap

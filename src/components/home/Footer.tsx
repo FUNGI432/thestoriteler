@@ -1,6 +1,6 @@
-const imgImage34 = "http://localhost:3845/assets/9a6151e20c5202d8c170c5e4933349dd5d3d499f.png";
-const imgArrow = "http://localhost:3845/assets/129398df5f28a1c753b9a03c49d140bd35fa1857.svg";
-const imgVector = "http://localhost:3845/assets/9c4b17ab40a0145a004956d6f0b417e1447da7ff.svg";
+import imgImage34 from "@/assets/footer-reveal.png";
+import imgArrow from "@/assets/footer-arrow.svg";
+import imgVector from "@/assets/footer-logo.svg";
 
 export default function Footer() {
   return (
