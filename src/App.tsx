@@ -1,9 +1,9 @@
 import Navbar from "@/components/layout/Navbar"
 import Hero from "@/components/home/Hero"
-// @ts-ignore
-import PrismaticBurst from "@/components/ui/PrismaticBurst"
+import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
 
 import AboutSection from "@/components/home/AboutSection"
+import CreateEventsSection from "@/components/home/CreateEventsSection"
 import MetricsSection from "@/components/home/MetricsSection"
 import VipTreatmentSection from "@/components/home/VipTreatmentSection"
 import ExperienceSection from "@/components/home/ExperienceSection"
@@ -23,33 +23,38 @@ function App() {
       <GradualBlur preset="page-header" height="5vh" strength={3} zIndex={100} />
       <GradualBlur preset="page-footer" height="5vh" strength={3} zIndex={100} />
 
-      {/* Sticky Navbar Wrapper */}
+      {/* Sticky Navbar Wrapper - NORMAL (Background & Contact Button) */}
       <div className="fixed top-0 left-0 w-full z-[1000] pointer-events-none">
         <div className="pointer-events-auto">
-          <Navbar />
+          <Navbar layer="normal" />
+        </div>
+      </div>
+
+      {/* Sticky Navbar Wrapper - BLENDED (Links & Logo) */}
+      <div className="fixed top-0 left-0 w-full z-[1001] mix-blend-difference pointer-events-none">
+        <div className="pointer-events-auto">
+          <Navbar layer="blended" />
         </div>
       </div>
       
       {/* Top Section containing Hero with restricted background */}
       <div className="relative w-full z-10 bg-[#13101C] overflow-hidden">
-        {/* Dynamic Background Layer restricted to this section */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-80" aria-hidden="true">
-          <PrismaticBurst
-            animationType="rotate3d"
-            intensity={2}
-            speed={0.5}
-            distort={0}
-            paused={false}
-            offset={{ x: 0, y: 0 }}
-            hoverDampness={0.25}
-            rayCount={0}
-            mixBlendMode="lighten"
-            colors={['#1c4eff', '#ca45ff', '#fe881b']}
-          />
+        {/* Dynamic Video Background Layer restricted to this section */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <div className="absolute inset-0 bg-black/50 z-10" />
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-full object-cover"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
         </div>
 
         {/* Hero Content - Navbar removed as it's now global fixed */}
-        <div className="relative z-50 flex flex-col items-center pt-24 w-full">
+        <div className="relative z-50 flex flex-col items-center w-full">
           <Hero />
         </div>
       </div>
@@ -57,9 +62,10 @@ function App() {
       {/* Rest of the site - ensure it overlaps the header by 1px to avoid subpixel lines */}
       <main className="w-full relative z-20 bg-white drop-shadow-[0_-10px_50px_rgba(0,0,0,0.3)] -mt-1">
         <AboutSection />
+        <CreateEventsSection />
+        <ExperienceSection />
         <MetricsSection />
         <VipTreatmentSection />
-        <ExperienceSection />
         <OnePartnershipSection />
       </main>
       
