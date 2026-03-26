@@ -65,8 +65,8 @@ function App() {
         <CreateEventsSection />
         <ExperienceSection />
         <MetricsSection />
-        <VipTreatmentSection />
         <OnePartnershipSection />
+        <VipTreatmentSection />
       </main>
       
       <Footer />

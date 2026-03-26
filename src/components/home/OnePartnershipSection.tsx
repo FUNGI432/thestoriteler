@@ -50,7 +50,7 @@ export default function OnePartnershipSection() {
   return (
     <section 
       ref={containerRef}
-      className="w-full bg-[#f9f9f9] rounded-b-[53.34px] overflow-hidden relative z-10"
+      className="w-full bg-[#13101C] rounded-b-[53.34px] overflow-hidden relative z-10"
     >
       <div 
         className="w-[1920px] h-[1400px] relative origin-top pointer-events-none" 
@@ -61,8 +61,8 @@ export default function OnePartnershipSection() {
           marginLeft: '-960px'
         }}
       >
-        <div className="-translate-x-1/2 -translate-y-1/2 absolute bg-white h-[55px] left-[50%] rounded-[40px] top-[150px] w-[193px] pointer-events-auto shadow-sm flex items-center justify-center">
-          <p className="text-[#1a0b54] text-[18.6px] font-medium">Our Promise</p>
+        <div className="-translate-x-1/2 -translate-y-1/2 absolute bg-white/5 backdrop-blur-md border border-white/10 h-[55px] left-[50%] rounded-[40px] top-[150px] w-[193px] pointer-events-auto shadow-sm flex items-center justify-center">
+          <p className="text-white text-[18.6px] font-medium">Our Promise</p>
         </div>
         
         <div className="-translate-x-1/2 -translate-y-1/2 absolute flex flex-col items-center left-[50%] top-[340px] w-[800px]">
@@ -71,7 +71,7 @@ export default function OnePartnershipSection() {
               One partnership
             </span>
             <br />
-            <span className="text-[#1a0b54] font-medium">makes change easy.</span>
+            <span className="text-white font-medium">makes change easy.</span>
           </h2>
         </div>
         
@@ -91,35 +91,35 @@ export default function OnePartnershipSection() {
           <div ref={varanasiRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Varanasi" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector2} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Varanasi</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Varanasi</p>
         </div>
 
         <div className="absolute left-[430px] top-[575px] w-[95px] flex flex-col items-center">
           <div ref={lucknowRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Lucknow" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector4} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Lucknow</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Lucknow</p>
         </div>
 
         <div className="absolute left-[430px] top-[750px] w-[95px] flex flex-col items-center">
           <div ref={suratRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Surat" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector6} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Surat</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Surat</p>
         </div>
 
         <div className="absolute left-[430px] top-[925px] w-[95px] flex flex-col items-center">
           <div ref={bangaloreRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Bangalore" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector8} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Bangalore</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Bangalore</p>
         </div>
 
         <div className="absolute left-[430px] top-[1100px] w-[95px] flex flex-col items-center">
           <div ref={keralaRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Kerala" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector10} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Kerala</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Kerala</p>
         </div>
 
         {/* RIGHT CITIES (X: 1395) */}
@@ -127,35 +127,35 @@ export default function OnePartnershipSection() {
           <div ref={delhiRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Delhi" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector1} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Delhi</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Delhi</p>
         </div>
 
         <div className="absolute left-[1395px] top-[575px] w-[95px] flex flex-col items-center">
           <div ref={jaipurRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Jaipur" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector3} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Jaipur</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Jaipur</p>
         </div>
 
         <div className="absolute left-[1395px] top-[750px] w-[95px] flex flex-col items-center">
           <div ref={kolkataRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Kolkata" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector5} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Kolkata</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Kolkata</p>
         </div>
 
         <div className="absolute left-[1395px] top-[925px] w-[95px] flex flex-col items-center">
           <div ref={ahmedabadRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Ahmedabad" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector7} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Ahmedabad</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Ahmedabad</p>
         </div>
 
         <div className="absolute left-[1395px] top-[1100px] w-[95px] flex flex-col items-center">
           <div ref={chennaiRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
             <img alt="Chennai" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector9} />
           </div>
-          <p className="mt-4 text-[14px] text-[#1a0b54] font-medium tracking-[1px] text-center w-[120px]">Chennai</p>
+          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Chennai</p>
         </div>
 
         {/* ANIMATED BEAMS FROM CITIES RADIATING TO CENTER */}
