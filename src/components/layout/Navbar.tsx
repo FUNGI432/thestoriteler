@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import imgIdeationStoritelerWebsite1 from "@/assets/navbar-logo.png";
 
 interface NavbarProps {
@@ -14,25 +14,25 @@ export default function Navbar({ layer = "all" }: NavbarProps) {
       {/* Left Links */}
       <div className={`flex-1 hidden md:flex items-center justify-around px-8 max-w-[704px] ${!showBlended ? "opacity-0 pointer-events-none select-none" : ""}`}>
         {["Events", "Saath Pere", "Marketing", "Shoots"].map((item) => (
-          <a
+          <Link
             key={item}
-            href={`#${item.toLowerCase().replace(" ", "-")}`}
+            to={item === "Events" ? "/events" : `/#${item.toLowerCase().replace(" ", "-")}`}
             className="text-white font-bold text-[16px] xl:text-[18.7px] tracking-[-0.56px] hover:opacity-70 transition-opacity"
           >
             {item}
-          </a>
+          </Link>
         ))}
       </div>
 
       {/* Logo Wrapper */}
       <div className={`shrink-0 flex items-center justify-center px-4 ${!showBlended ? "opacity-0 pointer-events-none select-none" : ""}`}>
-        <a href="/">
+        <Link to="/">
           <img
             src={imgIdeationStoritelerWebsite1}
             alt="TheStoriTeler"
             className="h-[60px] md:h-[98px] w-auto object-contain brightness-0 invert"
           />
-        </a>
+        </Link>
       </div>
 
       {/* Right portion including Links and Contact Button */}
@@ -41,19 +41,19 @@ export default function Navbar({ layer = "all" }: NavbarProps) {
         {/* Right Links */}
         <div className={`flex items-center justify-around w-full max-w-[400px] ${!showBlended ? "opacity-0 pointer-events-none select-none" : ""}`}>
           {["Home", "Founder’s Note", "Our Journey"].map((item) => (
-            <a
+            <Link
               key={item}
-              href={`#${item.toLowerCase().replace("’", "").replace(" ", "-")}`}
+              to={item === "Home" ? "/" : `/#${item.toLowerCase().replace("’", "").replace(" ", "-")}`}
               className="text-white font-bold text-[16px] xl:text-[18.7px] tracking-[-0.56px] hover:opacity-70 transition-opacity"
             >
               {item}
-            </a>
+            </Link>
           ))}
         </div>
         
         {/* Contact Button */}
-        <a
-          href="#contact"
+        <Link
+          to="/#contact"
           className={`relative group p-[3px] rounded-[13px] bg-gradient-to-r from-[#1c4eff] to-[#f97316] hover:opacity-90 transition-opacity ml-4 ${!showNormal ? "opacity-0 pointer-events-none select-none" : ""}`}
         >
           <div className="bg-[#2c2d3c] h-full w-full rounded-[10px] px-6 py-2 flex items-center justify-center">
@@ -61,7 +61,7 @@ export default function Navbar({ layer = "all" }: NavbarProps) {
               Contact
             </span>
           </div>
-        </a>
+        </Link>
       </div>
 
       {/* Mobile Menu Toggle */}
