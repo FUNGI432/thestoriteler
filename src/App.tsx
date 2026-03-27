@@ -5,6 +5,7 @@ import Footer from "@/components/home/Footer"
 import GradualBlur from "@/components/ui/GradualBlur"
 // @ts-ignore
 import CustomCursor from "@/components/ui/CustomCursor"
+import { Analytics } from "@vercel/analytics/react"
 
 import { Suspense, lazy } from "react"
 
@@ -45,6 +46,7 @@ function App() {
         </Suspense>
         
         <Footer />
+        <Analytics />
       </div>
     </BrowserRouter>
   )
