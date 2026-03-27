@@ -9,19 +9,22 @@ import {
   useAnimationFrame
 } from "framer-motion";
 
+import insta1 from "@/assets/insta_1.jpg";
+import insta2 from "@/assets/insta_2.jpg";
+import insta3 from "@/assets/insta_3.jpg";
+import insta4 from "@/assets/insta_4.jpg";
+import insta5 from "@/assets/insta_5.webp";
+import insta6 from "@/assets/insta_6.webp";
+import insta7 from "@/assets/insta_7.webp";
+import insta8 from "@/assets/insta_8.webp";
+import insta9 from "@/assets/insta_9.webp";
+import insta10 from "@/assets/insta_10.webp";
+import insta11 from "@/assets/insta_11.webp";
+import insta12 from "@/assets/insta_12.webp";
+
 const galleryImages = [
-  "https://picsum.photos/seed/1/800/600?grayscale",
-  "https://picsum.photos/seed/2/800/600?grayscale",
-  "https://picsum.photos/seed/3/800/600?grayscale",
-  "https://picsum.photos/seed/4/800/600?grayscale",
-  "https://picsum.photos/seed/5/800/600?grayscale",
-  "https://picsum.photos/seed/16/800/600?grayscale",
-  "https://picsum.photos/seed/17/800/600?grayscale",
-  "https://picsum.photos/seed/8/800/600?grayscale",
-  "https://picsum.photos/seed/9/800/600?grayscale",
-  "https://picsum.photos/seed/10/800/600?grayscale",
-  "https://picsum.photos/seed/21/800/600?grayscale",
-  "https://picsum.photos/seed/12/800/600?grayscale"
+  insta1, insta2, insta3, insta4, insta5, insta6,
+  insta7, insta8, insta9, insta10, insta11, insta12
 ];
 
 // Duplicated 4 times to ensure it covers the screen and can wrap safely (48 items total per row)
@@ -49,7 +52,7 @@ function ParallaxRow({ baseVelocity, offset = "0px" }: ParallaxRowProps) {
   });
 
   // Map scrolling speed to a smaller velocity multiplier to keep it slow and premium
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 0.5], {
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 0.2], {
     clamp: false
   });
 
@@ -122,13 +125,13 @@ export default function ExperienceSection() {
       {/* 3-Tier Multi-Directional Parallax Grid */}
       <div className="w-full flex flex-col space-y-2 md:space-y-4 overflow-hidden relative z-0">
         {/* Top: Rightwards */}
-        <ParallaxRow baseVelocity={0.08} offset="-50px" />
+        <ParallaxRow baseVelocity={0.04} offset="-50px" />
         
         {/* Middle: Leftwards */}
-        <ParallaxRow baseVelocity={-0.08} offset="50px" />
+        <ParallaxRow baseVelocity={-0.04} offset="50px" />
         
         {/* Bottom: Rightwards */}
-        <ParallaxRow baseVelocity={0.08} offset="-150px" />
+        <ParallaxRow baseVelocity={0.04} offset="-150px" />
       </div>
 
       {/* Soft overlay gradients on edges to mask elements wrapping */}

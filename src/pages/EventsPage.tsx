@@ -58,16 +58,8 @@ const YearAccordionColumn = ({ group, defaultExpanded = false }: { group: any; d
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       className="relative border-b md:border-b-0 md:border-r border-white/10 last:border-r-0 last:border-b-0 overflow-hidden flex flex-col bg-white/[0.01] hover:bg-white/[0.04] transition-colors duration-700 min-h-[150px] md:min-h-[600px] cursor-pointer group/col"
-      animate={{ 
-        flexGrow: isHovered ? 1 : 0,
-        flexBasis: isHovered ? "600px" : "120px",
-        flexShrink: isHovered ? 0 : 1 
-      }}
-      initial={{ 
-        flexGrow: defaultExpanded ? 1 : 0,
-        flexBasis: defaultExpanded ? "600px" : "120px",
-        flexShrink: defaultExpanded ? 0 : 1 
-      }}
+      animate={{ flex: isHovered ? 4 : 1 }}
+      initial={{ flex: defaultExpanded ? 4 : 1 }}
       transition={{ type: "spring", stiffness: 200, damping: 25 }}
     >
       {/* Hollow Text Background Year - Rotated 90 degrees Clockwise */}
@@ -88,7 +80,7 @@ const YearAccordionColumn = ({ group, defaultExpanded = false }: { group: any; d
         animate={{ opacity: isHovered ? 1 : 0 }}
         initial={{ opacity: defaultExpanded ? 1 : 0 }}
         transition={{ duration: 0.3 }}
-        className="absolute inset-0 z-10 w-full h-full flex flex-col pointer-events-none p-8 lg:p-12" 
+        className="absolute inset-0 z-10 w-full h-full flex flex-col pointer-events-none p-6 lg:p-10" 
       >
         <div className={`w-full h-full flex flex-col ${isHovered ? "pointer-events-auto" : "pointer-events-none"}`}>
           {/* Top Year Label */}
@@ -172,6 +164,7 @@ const upcomingEvents = [
 ];
 
 import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
+import imgSouthTextile from "@/assets/south textile expo.jpeg"
 
 // ... existing code ...
 
@@ -312,10 +305,19 @@ export default function EventsPage() {
 
             </div>
 
-            <div className="shrink-0 flex items-center justify-center relative z-10 w-full md:w-auto">
+            <div className="shrink-0 flex flex-col items-center gap-8 relative z-10 w-full md:w-[400px]">
+              <div className="w-full relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#ca45ff] to-[#1c4eff] rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+                <img 
+                  src={imgSouthTextile} 
+                  alt="South Textile Expo" 
+                  className="relative w-full h-auto rounded-2xl shadow-2xl border border-white/10 object-cover"
+                />
+              </div>
+
               <a 
                 href="#" 
-                className="w-full md:w-auto text-center px-12 py-5 rounded-full bg-white text-[#13101C] font-black uppercase tracking-[2px] text-[16px] hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
+                className="w-full text-center px-12 py-5 rounded-full bg-white text-[#13101C] font-black uppercase tracking-[2px] text-[16px] hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
               >
                 Register Now
                 <span className="block text-[10px] opacity-60 font-medium mt-1">Message Vimal Sir</span>

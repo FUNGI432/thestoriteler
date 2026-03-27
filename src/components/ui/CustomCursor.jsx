@@ -11,7 +11,8 @@ const CustomCursor = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      // Global zoom is 0.9, so we divide by 0.9 to align visual cursor with physical hitboxes
+      setMousePos({ x: e.clientX / 0.9, y: e.clientY / 0.9 });
       
       // Check if hovering over a clickable element
       const target = e.target;

@@ -307,6 +307,16 @@ class App {
     this.onResize();
     this.createGeometry();
     this.createMedias(items, bend, textColor, borderRadius, font);
+    
+    // Performance optimization: Only render when visible
+    this.isVisible = true;
+    if (typeof IntersectionObserver !== 'undefined') {
+      this.observer = new IntersectionObserver((entries) => {
+        this.isVisible = entries[0].isIntersecting;
+      }, { threshold: 0 });
+      this.observer.observe(this.container);
+    }
+    
     this.update();
     this.addEventListeners();
   }
@@ -415,6 +425,11 @@ class App {
     }
   }
   update() {
+    this.raf = window.requestAnimationFrame(this.update.bind(this));
+    
+    // Skip expensive WebGL rendering if not in viewport
+    if (!this.isVisible) return;
+
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
     if (this.medias) {
@@ -422,7 +437,6 @@ class App {
     }
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
-    this.raf = window.requestAnimationFrame(this.update.bind(this));
   }
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this);
@@ -453,6 +467,9 @@ class App {
     window.removeEventListener('touchend', this.boundOnTouchUp);
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+    }
+    if (this.observer) {
+      this.observer.disconnect();
     }
   }
 }

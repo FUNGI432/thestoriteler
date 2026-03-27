@@ -161,18 +161,18 @@ export default function OnePartnershipSection() {
         {/* ANIMATED BEAMS FROM CITIES RADIATING TO CENTER */}
         
         {/* Left Beams (Move left-to-right natively -> INTO center) */}
-        <AnimatedBeam containerRef={containerRef} fromRef={varanasiRef} toRef={centerRef} duration={3} delay={0.4} curvature={50} />
-        <AnimatedBeam containerRef={containerRef} fromRef={lucknowRef} toRef={centerRef} duration={3} delay={1.8} curvature={25} />
-        <AnimatedBeam containerRef={containerRef} fromRef={suratRef} toRef={centerRef} duration={3} delay={0.1} curvature={0} />
-        <AnimatedBeam containerRef={containerRef} fromRef={bangaloreRef} toRef={centerRef} duration={3} delay={2.3} curvature={-25} />
-        <AnimatedBeam containerRef={containerRef} fromRef={keralaRef} toRef={centerRef} duration={3} delay={1.1} curvature={-50} />
+        <AnimatedBeam containerRef={containerRef} fromRef={varanasiRef} toRef={centerRef} duration={6} delay={0.4} curvature={50} />
+        <AnimatedBeam containerRef={containerRef} fromRef={lucknowRef} toRef={centerRef} duration={6} delay={1.8} curvature={25} />
+        <AnimatedBeam containerRef={containerRef} fromRef={suratRef} toRef={centerRef} duration={6} delay={0.1} curvature={0} />
+        <AnimatedBeam containerRef={containerRef} fromRef={bangaloreRef} toRef={centerRef} duration={6} delay={2.3} curvature={-25} />
+        <AnimatedBeam containerRef={containerRef} fromRef={keralaRef} toRef={centerRef} duration={6} delay={1.1} curvature={-50} />
 
         {/* Right Beams (Move left-to-right natively -> OUT of center. Reverse -> INTO center) */}
-        <AnimatedBeam containerRef={containerRef} fromRef={delhiRef} toRef={centerRef} duration={3} delay={2.8} curvature={-50} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={jaipurRef} toRef={centerRef} duration={3} delay={0.9} curvature={-25} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={kolkataRef} toRef={centerRef} duration={3} delay={1.7} curvature={0} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={ahmedabadRef} toRef={centerRef} duration={3} delay={0.2} curvature={25} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={chennaiRef} toRef={centerRef} duration={3} delay={2.5} curvature={50} reverse />
+        <AnimatedBeam containerRef={containerRef} fromRef={delhiRef} toRef={centerRef} duration={6} delay={2.8} curvature={-50} reverse />
+        <AnimatedBeam containerRef={containerRef} fromRef={jaipurRef} toRef={centerRef} duration={6} delay={0.9} curvature={-25} reverse />
+        <AnimatedBeam containerRef={containerRef} fromRef={kolkataRef} toRef={centerRef} duration={6} delay={1.7} curvature={0} reverse />
+        <AnimatedBeam containerRef={containerRef} fromRef={ahmedabadRef} toRef={centerRef} duration={6} delay={0.2} curvature={25} reverse />
+        <AnimatedBeam containerRef={containerRef} fromRef={chennaiRef} toRef={centerRef} duration={6} delay={2.5} curvature={50} reverse />
 
       </div>
     </section>

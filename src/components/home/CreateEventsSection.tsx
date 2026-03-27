@@ -41,11 +41,11 @@ export default function CreateEventsSection() {
     <section className="relative w-full min-h-[80vh] flex flex-col items-center justify-center py-32 lg:py-56 bg-[#13101C] z-20">
       
       {/* Background Animated Bubbles - Repositioned strictly to the central focal area */}
-      <Bubble size={300} top="15%" left="20%" delay={0} duration={12} />
-      <Bubble size={380} top="25%" left="55%" delay={2} duration={16} />
-      <Bubble size={180} top="65%" left="25%" delay={5} duration={14} />
-      <Bubble size={250} top="75%" left="60%" delay={1} duration={18} />
-      <Bubble size={120} top="45%" left="22%" delay={3} duration={10} />
+      <Bubble size={300} top="15%" left="20%" delay={0} duration={24} />
+      <Bubble size={380} top="25%" left="55%" delay={2} duration={32} />
+      <Bubble size={180} top="65%" left="25%" delay={5} duration={28} />
+      <Bubble size={250} top="75%" left="60%" delay={1} duration={36} />
+      <Bubble size={120} top="45%" left="22%" delay={3} duration={20} />
 
       {/* Main Typography Content */}
       <div className="relative z-10 flex flex-col items-center text-center space-y-4 px-4 max-w-4xl mx-auto">
