@@ -172,12 +172,15 @@ export default function EventsPage() {
   return (
     <div className="w-full bg-[#13101C] min-h-screen text-white overflow-x-hidden relative">
       
-      {/* Background Soft Glows (only for lower sections now) */}
-      <div className="absolute top-[120%] left-[-10%] w-[50vw] h-[50vw] bg-[#ca45ff] opacity-[0.05] blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute top-[160%] right-[-10%] w-[50vw] h-[50vw] bg-[#1c4eff] opacity-[0.05] blur-[150px] rounded-full pointer-events-none" />
+      {/* Background Soft Glows (confined to an overflow-hidden wrapper to prevent scroll- stretching) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[120vh] left-[-10%] w-[50vw] h-[50vw] bg-[#ca45ff] opacity-[0.05] blur-[150px] rounded-full" />
+        <div className="absolute top-[250vh] right-[-10%] w-[50vw] h-[50vw] bg-[#1c4eff] opacity-[0.05] blur-[150px] rounded-full" />
+        <div className="absolute bottom-[20vh] left-[10%] w-[40vw] h-[40vw] bg-[#fe881b] opacity-[0.03] blur-[150px] rounded-full" />
+      </div>
 
       {/* Hero Header - Split Glass Layout */}
-      <div className="relative w-full min-h-screen flex mb-32">
+      <div className="relative w-full min-h-screen flex">
         {/* Dynamic Video Background Layer */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <video 
@@ -228,7 +231,7 @@ export default function EventsPage() {
       </div>
 
       {/* Metrics Grid */}
-      <div className="relative z-10 w-full max-w-[1920px] mx-auto px-4 sm:px-[10%] mb-40">
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto px-4 sm:px-[10%] py-20 lg:py-32">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {metrics.map((metric, index) => (
             <m.div 
@@ -258,7 +261,13 @@ export default function EventsPage() {
       </div>
 
       {/* Spotlight: South Textile Expo News */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 mb-40">
+      <m.div 
+        className="relative z-10 w-full max-w-[1400px] mx-auto px-4 py-20 lg:py-32"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
         <div className="w-full relative rounded-[32px] p-[2px] bg-gradient-to-br from-[#1c4eff] via-[#ca45ff] to-[#fe881b] overflow-hidden group">
           <div className="w-full h-full bg-[#13101C] rounded-[30px] p-8 md:p-16 flex flex-col md:flex-row items-center gap-12 justify-between backdrop-blur-3xl relative overflow-hidden">
             {/* Spotlight Glows */}
@@ -326,19 +335,31 @@ export default function EventsPage() {
 
           </div>
         </div>
-      </div>
+      </m.div>
 
       {/* Main Lists Section */}
-      <div className="w-full max-w-[1400px] mx-auto px-4 relative z-10 space-y-32">
-        <div className="text-center mb-20">
+      <div className="w-full max-w-[1400px] mx-auto px-4 relative z-10 flex flex-col gap-24 py-20 lg:py-32">
+        <m.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <h2 className="text-[30px] md:text-[45px] font-bold text-white uppercase tracking-tight">
             Our Events <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ca45ff] to-[#1c4eff]">& Venues</span>
           </h2>
           <p className="text-[#A69FB6] text-[16px] uppercase tracking-[2px] mt-4">Organised Platforms driving Business</p>
-        </div>
+        </m.div>
 
         {/* Upcoming Events - Interactive Accordion */}
-        <div className="flex flex-col space-y-8">
+        <m.div 
+          className="flex flex-col space-y-8"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        >
           <h3 className="text-[28px] md:text-[36px] font-medium text-white border-b border-white/10 pb-4 inline-block tracking-tight w-fit">
             Upcoming Events
           </h3>
@@ -348,10 +369,16 @@ export default function EventsPage() {
               <AccordionCard key={i} ev={ev} defaultExpanded={i === 0} />
             ))}
           </div>
-        </div>
+        </m.div>
 
         {/* Previous Events - Wireframe Columns */}
-        <div className="w-full flex flex-col lg:flex-row min-h-[600px] border border-white/10 rounded-[32px] overflow-hidden mt-12 mb-32">
+        <m.div 
+          className="w-full flex flex-col lg:flex-row min-h-[600px] border border-white/10 rounded-[32px] overflow-hidden mt-12 mb-20"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        >
           
           {/* Left Panel: We Create History */}
           <div className="w-full lg:w-[40%] bg-black/40 backdrop-blur-3xl flex flex-col justify-center p-12 lg:p-20 border-b lg:border-b-0 lg:border-r border-white/10 relative overflow-hidden shrink-0">
@@ -372,7 +399,7 @@ export default function EventsPage() {
                 <YearAccordionColumn key={group.year} group={group} defaultExpanded={i === 0} />
              ))}
           </div>
-        </div>
+        </m.div>
 
       </div>
 
