@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import Hero from "@/components/home/Hero"
+import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
 import AboutSection from "@/components/home/AboutSection"
 import CreateEventsSection from "@/components/home/CreateEventsSection"
 
@@ -14,9 +15,18 @@ export default function Home() {
     <>
       {/* Top Section containing Hero with restricted background */}
       <div className="relative w-full z-10 bg-[#13101C] overflow-hidden">
-        {/* Dynamic Background Layer (Video safely removed to fix 404 network timeout) */}
+        {/* Dynamic Video Background Layer */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#13101C] via-[#1a0f2e] to-[#13101C] z-10" />
+          <div className="absolute inset-0 bg-black/50 z-10" />
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-full object-cover"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
         </div>
 
         {/* Hero Content - Navbar removed as it's now global fixed */}

@@ -164,6 +164,7 @@ const upcomingEvents = [
 ];
 
 import imgSouthTextile from "@/assets/south textile expo.jpeg"
+import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
 
 // ... existing code ...
 
@@ -177,9 +178,17 @@ export default function EventsPage() {
 
       {/* Hero Header - Split Glass Layout */}
       <div className="relative w-full min-h-screen flex mb-32">
-        {/* Dynamic Background Layer (Video safely removed due to 404) */}
+        {/* Dynamic Video Background Layer */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#13101C] via-[#201030] to-[#13101C] z-10" />
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-full object-cover opacity-80"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
         </div>
 
         {/* Left Glass Panel (60% width on Desktop, full on mobile) */}
