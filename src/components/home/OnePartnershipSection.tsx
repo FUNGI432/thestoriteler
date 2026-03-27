@@ -1,46 +1,108 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { AnimatedBeam } from '@/components/ui/animated-beam';
+import { World } from '@/components/ui/globe';
+import { motion } from "motion/react";
 
-import imgVector from "@/assets/storiteler-logo-white.svg";
-import imgVector1 from "@/assets/node-1.svg";
-import imgVector2 from "@/assets/node-2.svg";
-import imgVector3 from "@/assets/node-3.svg";
-import imgVector4 from "@/assets/node-4.svg";
-import imgVector5 from "@/assets/node-5.svg";
-import imgVector6 from "@/assets/node-6.svg";
-import imgVector7 from "@/assets/node-7.svg";
-import imgVector8 from "@/assets/node-8.svg";
-import imgVector9 from "@/assets/node-9.svg";
-import imgVector10 from "@/assets/node-10.svg";
+const globeConfig = {
+  pointSize: 4,
+  globeColor: "#08031A",
+  showAtmosphere: true,
+  atmosphereColor: "#1c4eff",
+  atmosphereAltitude: 0.15,
+  emissive: "#200d3d",
+  emissiveIntensity: 0.3,
+  shininess: 0.9,
+  polygonColor: "rgba(255, 255, 255, 0.6)",
+  ambientLight: "#ffffff",
+  directionalLeftLight: "#ca45ff",
+  directionalTopLight: "#1c4eff",
+  pointLight: "#fe881b",
+  arcTime: 1200,
+  arcLength: 0.9,
+  rings: 2,
+  maxRings: 4,
+  initialPosition: { lat: 20.5937, lng: 78.9629 }, // Render centered near India
+  autoRotate: true,
+  autoRotateSpeed: 1,
+};
+
+const brandColors = ["#1c4eff", "#ca45ff", "#fe881b"];
+
+const sampleArcs = [
+  { order: 1, startLat: 28.6139, startLng: 77.209, endLat: 3.139, endLng: 101.6869, arcAlt: 0.2, color: brandColors[0] }, // Delhi to KL
+  { order: 1, startLat: 19.0760, startLng: 72.8777, endLat: 25.2048, endLng: 55.2708, arcAlt: 0.3, color: brandColors[1] }, // Mumbai to Dubai
+  { order: 2, startLat: 1.3521, startLng: 103.8198, endLat: 35.6762, endLng: 139.6503, arcAlt: 0.2, color: brandColors[2] }, // Singapore to Tokyo
+  { order: 2, startLat: 51.5072, startLng: -0.1276, endLat: 19.0760, endLng: 72.8777, arcAlt: 0.4, color: brandColors[0] }, // London to Mumbai
+  { order: 3, startLat: 22.3193, startLng: 114.1694, endLat: 28.6139, endLng: 77.209, arcAlt: 0.3, color: brandColors[1] }, // Hong Kong to Delhi
+  { order: 3, startLat: 12.9716, startLng: 77.5946, endLat: 37.7749, endLng: -122.4194, arcAlt: 0.6, color: brandColors[2] }, // Bangalore to SF
+  { order: 4, startLat: 28.6139, startLng: 77.209, endLat: -33.8688, endLng: 151.2093, arcAlt: 0.5, color: brandColors[0] }, // Delhi to Sydney
+  { order: 4, startLat: 48.8566, startLng: -2.3522, endLat: 19.0760, endLng: 72.8777, arcAlt: 0.3, color: brandColors[1] }, // Paris to Mumbai
+  { order: 5, startLat: 13.0827, startLng: 80.2707, endLat: 1.3521, endLng: 103.8198, arcAlt: 0.2, color: brandColors[2] }, // Chennai to Singapore
+  { order: 5, startLat: 25.2048, startLng: 55.2708, endLat: 51.5072, endLng: -0.1276, arcAlt: 0.3, color: brandColors[0] }, // Dubai to London    
+];
+
+/**
+ * Emits cities radially from the center, creating the illusion that they are
+ * spawning from behind the 3D globe and fading outwards.
+ */
+const CITIES = [
+  "Noida", "Delhi", "Surat", "Kerala", "Mumbai", 
+  "Chennai", "Jaipur", "Kolkata", "Bangalore", "Varanasi", 
+  "Pune", "Hyderabad", "Ahmedabad", "Lucknow", "Chandigarh", "Indore",
+  "Goa", "Kochi", "Gurgaon", "Agra"
+];
+
+const RadialCityEmitter = () => {
+  return (
+    <div className="absolute left-1/2 top-[900px] w-0 h-0 z-10 pointer-events-none">
+      {CITIES.map((city, i) => {
+        // Distribute angles using the golden ratio (137.5 degrees) for organic pseudo-random spacing
+        const angle = ((i * 137.5) % 360) * (Math.PI / 180); 
+        const maxRadius = 750 + (i % 5) * 150; // Randomize max distance from 750px to 1350px
+        const endX = Math.cos(angle) * maxRadius;
+        const endY = Math.sin(angle) * maxRadius;
+        
+        return (
+          <motion.div
+            key={`${city}-${i}`}
+            className="absolute left-0 top-0 pointer-events-none"
+            animate={{
+              x: [0, endX],
+              y: [0, endY],
+              opacity: [0, 0, 1, 0], // Stay invisible -> Fade in -> Fade out
+              scale: [0.6, 1, 1.2],
+            }}
+            transition={{
+              duration: 16 + (i % 4) * 4, // Very slow, ambient float (16s to 28s)
+              repeat: Infinity,
+              delay: i * 1.5, // Space out the spawns so they don't burst all at once
+              ease: "linear",
+              times: [0, 0.3, 0.6, 1] // Stays 0 until 30% of journey (when exiting globe bounds), fades fully in by 60%, fades to 0 at end
+            }}
+          >
+            <div className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-3">
+              <div className="h-[2px] w-[30px] bg-white/40 rounded-full" />
+              <p className="text-[#e2e2e2] text-sm md:text-lg tracking-[4px] font-medium uppercase whitespace-nowrap drop-shadow-md">
+                {city}
+              </p>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+};
 
 export default function OnePartnershipSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 
-  // Center node
-  const centerRef = useRef<HTMLDivElement>(null);
-
-  // Left cities
-  const varanasiRef = useRef<HTMLDivElement>(null);
-  const lucknowRef = useRef<HTMLDivElement>(null);
-  const suratRef = useRef<HTMLDivElement>(null);
-  const bangaloreRef = useRef<HTMLDivElement>(null);
-  const keralaRef = useRef<HTMLDivElement>(null);
-
-  // Right cities
-  const delhiRef = useRef<HTMLDivElement>(null);
-  const jaipurRef = useRef<HTMLDivElement>(null);
-  const kolkataRef = useRef<HTMLDivElement>(null);
-  const ahmedabadRef = useRef<HTMLDivElement>(null);
-  const chennaiRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const resize = () => {
       if (!containerRef.current) return;
       const width = containerRef.current.clientWidth;
-      setScale(width / 1920);
+      setScale(Math.min(width / 1920, 1));
     };
     resize();
     window.addEventListener('resize', resize);
@@ -53,126 +115,40 @@ export default function OnePartnershipSection() {
       className="w-full bg-[#13101C] rounded-b-[53.34px] overflow-hidden relative z-10"
     >
       <div 
-        className="w-[1920px] h-[1400px] relative origin-top pointer-events-none" 
+        className="w-[1920px] h-[1600px] relative origin-top" 
         style={{ 
           transform: `scale(${scale})`, 
-          marginBottom: `${1400 * (scale - 1)}px`, 
+          marginBottom: `${1600 * (scale - 1)}px`, 
           left: '50%',
           marginLeft: '-960px'
         }}
       >
-        <div className="-translate-x-1/2 -translate-y-1/2 absolute bg-white/5 backdrop-blur-md border border-white/10 h-[55px] left-[50%] rounded-[40px] top-[150px] w-[193px] pointer-events-auto shadow-sm flex items-center justify-center">
-          <p className="text-white text-[18.6px] font-medium">Our Promise</p>
-        </div>
-        
-        <div className="-translate-x-1/2 -translate-y-1/2 absolute flex flex-col items-center left-[50%] top-[340px] w-[800px]">
-          <h2 className="text-[77px] font-bold tracking-[-2px] leading-tight text-center">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2ba7ff] via-[#ca45ff] to-[#fe881b]">
-              One partnership
+        {/* Top Titles */}
+        <div className="absolute top-[120px] w-full flex flex-col items-center pointer-events-none z-40 px-4">
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 h-[55px] rounded-[40px] px-10 shadow-sm flex items-center justify-center mb-10 pointer-events-auto">
+            <p className="text-white text-[18.6px] font-medium uppercase tracking-[2px]">Our Promise</p>
+          </div>
+          
+          <h2 className="text-[32px] md:text-[56px] font-bold tracking-tight leading-[1.3] text-center drop-shadow-2xl w-[90%] max-w-[1240px]">
+            <span className="text-white font-medium">
+              Whether you're a brand looking to grow, a manufacturer seeking buyers, or a business aiming to create visibility —
             </span>
             <br />
-            <span className="text-white font-medium">makes change easy.</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2ba7ff] via-[#ca45ff] to-[#fe881b]">
+              we are here to make it happen.
+            </span>
           </h2>
         </div>
-        
-        <div className="-translate-x-1/2 absolute bg-gradient-to-r from-[#1c4eff] via-[#ac24ff] to-[#fe881b] h-[64px] left-[50%] rounded-[13px] top-[470px] w-[232px] pointer-events-auto cursor-pointer flex items-center justify-center hover:opacity-90 transition-opacity">
-          <p className="text-white text-[18.7px] font-bold tracking-tight">What We Do</p>
+
+        {/* Ambient Radial City Emitter (Behind the globe) */}
+        <RadialCityEmitter />
+
+        {/* Central 3D Globe Component */}
+        <div className="absolute left-1/2 top-[900px] -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] z-20 cursor-move pointer-events-auto">
+          {/* Fading glow behind globe */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1c4eff] via-[#ca45ff] to-[#fe881b] opacity-10 blur-[150px] rounded-full pointer-events-none" />
+          <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
-
-        {/* --- NETWORK GRAPH MAPPING --- */}
-
-        {/* Center Node */}
-        <div ref={centerRef} className="absolute left-[880px] top-[716px] size-[157px] pointer-events-auto hover:scale-105 transition-transform bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100 z-50">
-          <img alt="The Stori Teler" className="w-[115px] h-[54px] object-contain shrink-0" src={imgVector} />
-        </div>
-
-        {/* LEFT CITIES (X: 430) */}
-        <div className="absolute left-[430px] top-[400px] w-[95px] flex flex-col items-center">
-          <div ref={varanasiRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Varanasi" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector2} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Varanasi</p>
-        </div>
-
-        <div className="absolute left-[430px] top-[575px] w-[95px] flex flex-col items-center">
-          <div ref={lucknowRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Lucknow" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector4} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Lucknow</p>
-        </div>
-
-        <div className="absolute left-[430px] top-[750px] w-[95px] flex flex-col items-center">
-          <div ref={suratRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Surat" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector6} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Surat</p>
-        </div>
-
-        <div className="absolute left-[430px] top-[925px] w-[95px] flex flex-col items-center">
-          <div ref={bangaloreRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Bangalore" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector8} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Bangalore</p>
-        </div>
-
-        <div className="absolute left-[430px] top-[1100px] w-[95px] flex flex-col items-center">
-          <div ref={keralaRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Kerala" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector10} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Kerala</p>
-        </div>
-
-        {/* RIGHT CITIES (X: 1395) */}
-        <div className="absolute left-[1395px] top-[400px] w-[95px] flex flex-col items-center">
-          <div ref={delhiRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Delhi" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector1} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Delhi</p>
-        </div>
-
-        <div className="absolute left-[1395px] top-[575px] w-[95px] flex flex-col items-center">
-          <div ref={jaipurRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Jaipur" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector3} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Jaipur</p>
-        </div>
-
-        <div className="absolute left-[1395px] top-[750px] w-[95px] flex flex-col items-center">
-          <div ref={kolkataRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Kolkata" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector5} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Kolkata</p>
-        </div>
-
-        <div className="absolute left-[1395px] top-[925px] w-[95px] flex flex-col items-center">
-          <div ref={ahmedabadRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Ahmedabad" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector7} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Ahmedabad</p>
-        </div>
-
-        <div className="absolute left-[1395px] top-[1100px] w-[95px] flex flex-col items-center">
-          <div ref={chennaiRef} className="size-[95px] bg-white rounded-full flex items-center justify-center shadow-sm border border-[#e5e5e5] hover:scale-105 transition-transform z-20 pointer-events-auto">
-            <img alt="Chennai" className="w-[50%] h-[50%] object-contain shrink-0" src={imgVector9} />
-          </div>
-          <p className="mt-4 text-[14px] text-white font-medium tracking-[1px] text-center w-[120px]">Chennai</p>
-        </div>
-
-        {/* ANIMATED BEAMS FROM CITIES RADIATING TO CENTER */}
-        
-        {/* Left Beams (Move left-to-right natively -> INTO center) */}
-        <AnimatedBeam containerRef={containerRef} fromRef={varanasiRef} toRef={centerRef} duration={6} delay={0.4} curvature={50} />
-        <AnimatedBeam containerRef={containerRef} fromRef={lucknowRef} toRef={centerRef} duration={6} delay={1.8} curvature={25} />
-        <AnimatedBeam containerRef={containerRef} fromRef={suratRef} toRef={centerRef} duration={6} delay={0.1} curvature={0} />
-        <AnimatedBeam containerRef={containerRef} fromRef={bangaloreRef} toRef={centerRef} duration={6} delay={2.3} curvature={-25} />
-        <AnimatedBeam containerRef={containerRef} fromRef={keralaRef} toRef={centerRef} duration={6} delay={1.1} curvature={-50} />
-
-        {/* Right Beams (Move left-to-right natively -> OUT of center. Reverse -> INTO center) */}
-        <AnimatedBeam containerRef={containerRef} fromRef={delhiRef} toRef={centerRef} duration={6} delay={2.8} curvature={-50} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={jaipurRef} toRef={centerRef} duration={6} delay={0.9} curvature={-25} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={kolkataRef} toRef={centerRef} duration={6} delay={1.7} curvature={0} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={ahmedabadRef} toRef={centerRef} duration={6} delay={0.2} curvature={25} reverse />
-        <AnimatedBeam containerRef={containerRef} fromRef={chennaiRef} toRef={centerRef} duration={6} delay={2.5} curvature={50} reverse />
 
       </div>
     </section>
