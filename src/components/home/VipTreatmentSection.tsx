@@ -1,4 +1,5 @@
 import { useRef } from "react"
+import { m } from "framer-motion"
 
 export default function VipTreatmentSection() {
   const containerRef = useRef(null);
@@ -12,7 +13,13 @@ export default function VipTreatmentSection() {
         >
           
           {/* Left Side: Brand Typography Heading */}
-          <div className="relative w-full lg:w-1/2 p-8 lg:p-16 flex flex-col items-start justify-center z-20">
+          <m.div 
+            className="relative w-full lg:w-1/2 p-8 lg:p-16 flex flex-col items-start justify-center z-20"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
             <div className="space-y-2 mb-10">
               <h2 className="text-[42px] md:text-[64px] text-white font-light leading-tight">
                 Let's Build Your
@@ -21,10 +28,16 @@ export default function VipTreatmentSection() {
                 Story together.
               </h3>
             </div>
-          </div>
+          </m.div>
 
           {/* Right Side: High-Fidelity Contact Form */}
-          <div className="relative w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center h-full z-20 lg:ml-auto">
+          <m.div 
+            className="relative w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center h-full z-20 lg:ml-auto"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+          >
 
             <form className="space-y-6 w-full max-w-[611px]" onSubmit={(e) => e.preventDefault()}>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -97,7 +110,7 @@ export default function VipTreatmentSection() {
               </button>
             </form>
 
-          </div>
+          </m.div>
           
         </div>
       </div>

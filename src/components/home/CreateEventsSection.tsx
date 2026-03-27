@@ -48,7 +48,13 @@ export default function CreateEventsSection() {
       <Bubble size={120} top="45%" left="22%" delay={3} duration={20} />
 
       {/* Main Typography Content */}
-      <div className="relative z-10 flex flex-col items-center text-center space-y-4 px-4 max-w-4xl mx-auto">
+      <m.div 
+        className="relative z-10 flex flex-col items-center text-center space-y-4 px-4 max-w-4xl mx-auto"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
                 <h2 className="text-[#898989] text-[24px] md:text-[32px] lg:text-[49.88px] font-bold tracking-[-1px] leading-[1.1]">
             We don't just<br />
             Create <span className="text-[#c7c7c7]">events</span>
@@ -68,7 +74,7 @@ export default function CreateEventsSection() {
           From concept to execution, we design experiences that engage, influence, and convert.
         </p>
 
-      </div>
+      </m.div>
       
     </section>
   );

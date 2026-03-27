@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import Loader from "@/components/ui/Loader"
 import Hero from "@/components/home/Hero"
 import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
 import AboutSection from "@/components/home/AboutSection"
@@ -40,7 +41,7 @@ export default function Home() {
         <AboutSection />
         <CreateEventsSection />
         
-        <Suspense fallback={<div className="w-full h-screen bg-[#13101C] animate-pulse flex items-center justify-center"><p className="text-white/50 tracking-widest uppercase">Loading...</p></div>}>
+        <Suspense fallback={<Loader />}>
           <ExperienceSection />
           <MetricsSection />
           <OnePartnershipSection />

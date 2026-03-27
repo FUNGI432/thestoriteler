@@ -75,11 +75,11 @@ const RadialCityEmitter = () => {
               scale: [0.6, 1, 1.2],
             }}
             transition={{
-              duration: 16 + (i % 4) * 4, // Very slow, ambient float (16s to 28s)
+              duration: 6 + (i % 3) * 2, // Faster float (6s to 10s)
               repeat: Infinity,
-              delay: i * 1.5, // Space out the spawns so they don't burst all at once
+              delay: i * 0.4, // Faster spawn staggering
               ease: "linear",
-              times: [0, 0.3, 0.6, 1] // Stays 0 until 30% of journey (when exiting globe bounds), fades fully in by 60%, fades to 0 at end
+              times: [0, 0.2, 0.5, 1] // Faster fade-in curve
             }}
           >
             <div className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-3">
@@ -125,7 +125,13 @@ export default function OnePartnershipSection() {
         }}
       >
         {/* Top Titles */}
-        <div className="absolute top-[120px] w-full flex flex-col items-center pointer-events-none z-40 px-4">
+        <m.div 
+          className="absolute top-[120px] w-full flex flex-col items-center pointer-events-none z-40 px-4"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
           <div className="bg-white/5 backdrop-blur-md border border-white/10 h-[55px] rounded-[40px] px-10 shadow-sm flex items-center justify-center mb-10 pointer-events-auto">
             <p className="text-white text-[18.6px] font-medium uppercase tracking-[2px]">Our Promise</p>
           </div>
@@ -139,7 +145,7 @@ export default function OnePartnershipSection() {
               we are here to make it happen.
             </span>
           </h2>
-        </div>
+        </m.div>
 
         {/* Ambient Radial City Emitter (Behind the globe) */}
         <RadialCityEmitter />

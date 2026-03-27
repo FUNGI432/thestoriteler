@@ -1,4 +1,5 @@
 import imgWeWork from "@/assets/we work beyond the box.png";
+import { m } from "framer-motion";
 
 export default function AboutSection() {
   return (
@@ -15,7 +16,13 @@ export default function AboutSection() {
         </div>
 
         {/* Right Content Block */}
-        <div className="w-full lg:w-[45%] flex flex-col items-center lg:items-start space-y-12">
+        <m.div 
+          className="w-full lg:w-[45%] flex flex-col items-center lg:items-start space-y-12"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
           <p className="text-[#e2d5ec] text-[16px] md:text-[18px] leading-[1.8] font-light tracking-wide text-justify lg:text-left">
             The Stori Teler is a strategic experiential marketing and events company built for businesses that value scale, credibility, and results. We design high-impact platforms that connect serious buyers with leading brands, transforming interactions into measurable growth, powerful positioning, and long-term industry influence across India’s most competitive and opportunity-driven markets.
           </p>
@@ -31,7 +38,7 @@ export default function AboutSection() {
               Partner With Us
             </span>
           </a>
-        </div>
+        </m.div>
 
       </div>
     </section>

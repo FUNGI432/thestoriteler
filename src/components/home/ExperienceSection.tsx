@@ -119,7 +119,13 @@ export default function ExperienceSection() {
     <section className="w-full bg-[#13101C] relative overflow-hidden py-32 lg:py-40">
       
       {/* Typography Block */}
-      <div className="w-full max-w-[1920px] mx-auto px-4 flex flex-col items-center justify-center text-center space-y-6 relative z-10 mb-20">
+      <m.div 
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="w-full max-w-[1920px] mx-auto px-4 flex flex-col items-center justify-center text-center space-y-6 relative z-10 mb-20"
+      >
         <h2 className="text-[60px] md:text-[80px] lg:text-[125.834px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2ba7ff] via-[#ca45ff] to-[#fe881b] leading-[1.1] md:leading-[1.18] tracking-[-1px] lg:tracking-[-2px]">
           Experience the Energy.
         </h2>
@@ -127,7 +133,7 @@ export default function ExperienceSection() {
         <p className="text-[18px] md:text-[22px] lg:text-[26.452px] text-[#bdaee7] font-light tracking-[1px] leading-[1.4] max-w-[817px]">
           where every event is a story, and every story creates impact.
         </p>
-      </div>
+      </m.div>
 
       {/* 3-Tier Multi-Directional Parallax Grid */}
       <div className="w-full flex flex-col space-y-2 md:space-y-4 overflow-hidden relative z-0">
@@ -140,6 +146,27 @@ export default function ExperienceSection() {
         {/* Bottom: Rightwards */}
         <ParallaxRow baseVelocity={0.04} offset="-150px" />
       </div>
+
+      {/* Instagram CTA */}
+      <m.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        className="w-full flex justify-center py-20 relative z-20"
+      >
+        <a 
+          href="https://www.instagram.com/thestoriteler/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="px-10 py-5 rounded-full bg-white/5 border border-white/20 hover:bg-white/15 hover:border-[#ca45ff]/50 transition-all duration-300 backdrop-blur-md flex items-center gap-4 group shadow-[0_0_30px_rgba(202,69,255,0.0)] hover:shadow-[0_0_30px_rgba(202,69,255,0.2)]"
+        >
+          <span className="text-white font-medium tracking-[3px] uppercase text-sm md:text-base">View more on Instagram</span>
+          <svg className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </m.div>
 
       {/* Soft overlay gradients on edges to mask elements wrapping */}
       <div className="absolute top-0 bottom-0 left-0 w-[5%] lg:w-[10%] bg-gradient-to-r from-[#13101C] to-transparent pointer-events-none z-10" />

@@ -8,6 +8,7 @@ import GradualBlur from "@/components/ui/GradualBlur"
 import CustomCursor from "@/components/ui/CustomCursor"
 
 import { Suspense, lazy } from "react"
+import Loader from "@/components/ui/Loader"
 
 // Lazy-load the heavy page components to split the bundle
 const Home = lazy(() => import("@/pages/Home"))
@@ -39,7 +40,7 @@ function App() {
         </div>
         
         {/* Page Routes with Code Splitting Suspense Boundary */}
-        <Suspense fallback={<div className="w-full h-screen bg-[#13101C] flex items-center justify-center text-[#ca45ff] font-light tracking-[2px]">Loading Experience...</div>}>
+        <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<EventsPage />} />
