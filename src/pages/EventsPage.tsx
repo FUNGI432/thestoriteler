@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useSpring, useTransform } from "framer-motion";
+import { m, useInView, useSpring, useTransform } from "framer-motion";
 
 const AccordionCard = ({ ev, defaultExpanded = false }: { ev: any; defaultExpanded?: boolean }) => {
   const [isHovered, setIsHovered] = useState(defaultExpanded);
 
   return (
-    <motion.div
+    <m.div
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       className={`relative rounded-[32px] overflow-hidden p-[2px] cursor-pointer transition-colors duration-500 shrink-0 min-w-[60px] md:min-w-[80px] ${
@@ -20,7 +20,7 @@ const AccordionCard = ({ ev, defaultExpanded = false }: { ev: any; defaultExpand
         {/* Abstract glow inside for visual interest */}
         <div className={`absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[70px] transition-all duration-700 ${isHovered ? "opacity-40 bg-[#ca45ff]" : "opacity-0"}`} />
 
-        <motion.div 
+        <m.div 
           animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
           initial={{ opacity: defaultExpanded ? 1 : 0, y: defaultExpanded ? 0 : 20 }}
           transition={{ duration: 0.3 }}
@@ -33,10 +33,10 @@ const AccordionCard = ({ ev, defaultExpanded = false }: { ev: any; defaultExpand
             {ev.org && <span className="text-[#bdaee7] truncate"><strong className="text-white">🎯 Org:</strong> {ev.org}</span>}
             {ev.date && <span className="text-[#A69FB6] truncate"><strong className="text-white">📅 Dat:</strong> {ev.date}</span>}
           </div>
-        </motion.div>
+        </m.div>
         
         {/* Collapsed Vertical Title */}
-        <motion.div 
+        <m.div 
            animate={{ opacity: isHovered ? 0 : 1 }}
            initial={{ opacity: defaultExpanded ? 0 : 1 }}
            className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -44,9 +44,9 @@ const AccordionCard = ({ ev, defaultExpanded = false }: { ev: any; defaultExpand
            <h4 className="text-white/50 text-[18px] md:text-[22px] font-medium tracking-widest whitespace-nowrap md:-rotate-90 origin-center truncate w-[250px] md:w-[350px] text-center">
              {ev.name}
            </h4>
-        </motion.div>
+        </m.div>
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -54,7 +54,7 @@ const YearAccordionColumn = ({ group, defaultExpanded = false }: { group: any; d
   const [isHovered, setIsHovered] = useState(defaultExpanded);
 
   return (
-    <motion.div
+    <m.div
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       className="relative border-b md:border-b-0 md:border-r border-white/10 last:border-r-0 last:border-b-0 overflow-hidden flex flex-col bg-white/[0.01] hover:bg-white/[0.04] transition-colors duration-700 min-h-[150px] md:min-h-[600px] cursor-pointer group/col"
@@ -76,7 +76,7 @@ const YearAccordionColumn = ({ group, defaultExpanded = false }: { group: any; d
       </div>
 
       {/* Content wrapper - Only fully visible when hovered or expanded */}
-      <motion.div 
+      <m.div 
         animate={{ opacity: isHovered ? 1 : 0 }}
         initial={{ opacity: defaultExpanded ? 1 : 0 }}
         transition={{ duration: 0.3 }}
@@ -98,8 +98,8 @@ const YearAccordionColumn = ({ group, defaultExpanded = false }: { group: any; d
              ))}
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 };
 
@@ -120,7 +120,7 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 
   const display = useTransform(spring, (current) => Math.round(current) + suffix);
 
-  return <motion.span ref={ref}>{display}</motion.span>;
+  return <m.span ref={ref}>{display}</m.span>;
 }
 
 const metrics = [
@@ -163,7 +163,6 @@ const upcomingEvents = [
   { name: "Kolkata Couture Expo", org: "SAREE ASSOCIATION", date: "", venue: "Milan Mela, Kolkata" },
 ];
 
-import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
 import imgSouthTextile from "@/assets/south textile expo.jpeg"
 
 // ... existing code ...
@@ -178,17 +177,9 @@ export default function EventsPage() {
 
       {/* Hero Header - Split Glass Layout */}
       <div className="relative w-full min-h-screen flex mb-32">
-        {/* Dynamic Video Background Layer */}
+        {/* Dynamic Background Layer (Video safely removed due to 404) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="w-full h-full object-cover"
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#13101C] via-[#201030] to-[#13101C] z-10" />
         </div>
 
         {/* Left Glass Panel (60% width on Desktop, full on mobile) */}
@@ -231,11 +222,11 @@ export default function EventsPage() {
       <div className="relative z-10 w-full max-w-[1920px] mx-auto px-4 sm:px-[10%] mb-40">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {metrics.map((metric, index) => (
-            <motion.div 
+            <m.div 
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="flex flex-col items-center justify-center p-8 bg-white/[0.03] backdrop-blur-xl rounded-[24px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_32px_rgba(0,0,0,0.5)] aspect-[3/4] border border-white/10 hover:bg-white/[0.05] hover:border-white/20 transition-all duration-500 ease-out group"
             >
@@ -252,7 +243,7 @@ export default function EventsPage() {
               <p className="text-[26px] lg:text-[38px] text-[#bdaee7] font-normal text-center leading-[1.1] whitespace-pre-line group-hover:text-white transition-colors duration-500">
                 {metric.label}
               </p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

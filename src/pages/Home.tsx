@@ -1,29 +1,22 @@
+import { lazy, Suspense } from 'react';
 import Hero from "@/components/home/Hero"
-import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
 import AboutSection from "@/components/home/AboutSection"
 import CreateEventsSection from "@/components/home/CreateEventsSection"
-import MetricsSection from "@/components/home/MetricsSection"
-import VipTreatmentSection from "@/components/home/VipTreatmentSection"
-import ExperienceSection from "@/components/home/ExperienceSection"
-import OnePartnershipSection from "@/components/home/OnePartnershipSection"
+
+// Dynamically imported below-the-fold components to save ~400KB on initial load
+const MetricsSection = lazy(() => import("@/components/home/MetricsSection"));
+const VipTreatmentSection = lazy(() => import("@/components/home/VipTreatmentSection"));
+const ExperienceSection = lazy(() => import("@/components/home/ExperienceSection"));
+const OnePartnershipSection = lazy(() => import("@/components/home/OnePartnershipSection"));
 
 export default function Home() {
   return (
     <>
       {/* Top Section containing Hero with restricted background */}
       <div className="relative w-full z-10 bg-[#13101C] overflow-hidden">
-        {/* Dynamic Video Background Layer restricted to this section */}
+        {/* Dynamic Background Layer (Video safely removed to fix 404 network timeout) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <div className="absolute inset-0 bg-black/50 z-10" />
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="w-full h-full object-cover"
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#13101C] via-[#1a0f2e] to-[#13101C] z-10" />
         </div>
 
         {/* Hero Content - Navbar removed as it's now global fixed */}
@@ -36,10 +29,13 @@ export default function Home() {
       <main className="w-full relative z-20 bg-white drop-shadow-[0_-10px_50px_rgba(0,0,0,0.3)] -mt-1">
         <AboutSection />
         <CreateEventsSection />
-        <ExperienceSection />
-        <MetricsSection />
-        <OnePartnershipSection />
-        <VipTreatmentSection />
+        
+        <Suspense fallback={<div className="w-full h-screen bg-[#13101C] animate-pulse flex items-center justify-center"><p className="text-white/50 tracking-widest uppercase">Loading...</p></div>}>
+          <ExperienceSection />
+          <MetricsSection />
+          <OnePartnershipSection />
+          <VipTreatmentSection />
+        </Suspense>
       </main>
     </>
   )

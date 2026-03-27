@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import {
-  motion,
+  m,
   useScroll,
   useSpring,
   useTransform,
@@ -31,8 +31,15 @@ const galleryImages = [
 const duplicatedItems = [...galleryImages, ...galleryImages, ...galleryImages, ...galleryImages];
 
 const ImageCard = ({ src }: { src: string }) => (
-  <div className="w-[90px] md:w-[140px] lg:w-[190px] aspect-[4/3] rounded-[8px] md:rounded-[16px] overflow-hidden relative shrink-0 border border-white/5 shadow-[0_4px_16px_rgba(0,0,0,0.5)] group bg-[#201c29]">
-    <img src={src} alt="Event showcase" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+  <div className="w-[169px] aspect-[169/211] rounded-[8px] md:rounded-[16px] overflow-hidden relative shrink-0 border border-white/5 shadow-[0_4px_16px_rgba(0,0,0,0.5)] group bg-[#201c29]">
+    <img 
+      src={src} 
+      alt="Event showcase" 
+      loading="lazy"
+      width={169}
+      height={211}
+      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+    />
     <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
   </div>
 );
@@ -98,11 +105,11 @@ function ParallaxRow({ baseVelocity, offset = "0px" }: ParallaxRowProps) {
         transform: `translateX(${offset})` /* Apply the staggered styling correctly */
       }}
     >
-      <motion.div className="flex gap-2 md:gap-4 min-w-max" style={{ x }}>
+      <m.div className="flex gap-2 md:gap-4 min-w-max" style={{ x }}>
         {duplicatedItems.map((src, i) => (
           <ImageCard key={i} src={src} />
         ))}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

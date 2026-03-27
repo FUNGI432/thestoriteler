@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { World } from '@/components/ui/globe';
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 
 const globeConfig = {
   pointSize: 4,
@@ -64,10 +64,11 @@ const RadialCityEmitter = () => {
         const endY = Math.sin(angle) * maxRadius;
         
         return (
-          <motion.div
+          <m.div
             key={`${city}-${i}`}
             className="absolute left-0 top-0 pointer-events-none"
-            animate={{
+            viewport={{ once: true, amount: 0.1 }}
+            whileInView={{
               x: [0, endX],
               y: [0, endY],
               opacity: [0, 0, 1, 0], // Stay invisible -> Fade in -> Fade out
@@ -87,7 +88,7 @@ const RadialCityEmitter = () => {
                 {city}
               </p>
             </div>
-          </motion.div>
+          </m.div>
         );
       })}
     </div>

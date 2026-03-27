@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const Bubble = ({ size, top, left, delay, duration }: { size: number, top: string, left: string, delay: number, duration: number }) => {
   return (
-    <motion.div
+    <m.div
       className="absolute pointer-events-none"
       style={{
         width: size,
@@ -49,16 +49,10 @@ export default function CreateEventsSection() {
 
       {/* Main Typography Content */}
       <div className="relative z-10 flex flex-col items-center text-center space-y-4 px-4 max-w-4xl mx-auto">
-        
-        <h3 className="text-[18px] md:text-[24px] text-[#A69FB6] font-light tracking-[2px] md:tracking-[4px] uppercase">
-          We don't just
-        </h3>
-        
-        <h2 className="text-[50px] md:text-[80px] lg:text-[100px] font-black uppercase tracking-tight leading-[1.1] pb-2">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ca45ff] via-[#8545ff] to-[#1c4eff]">
-            Create Events,
-          </span>
-        </h2>
+                <h2 className="text-[#898989] text-[24px] md:text-[32px] lg:text-[49.88px] font-bold tracking-[-1px] leading-[1.1]">
+            We don't just<br />
+            Create <span className="text-[#c7c7c7]">events</span>
+          </h2>
         
         <h3 className="text-[18px] md:text-[24px] text-[#A69FB6] font-light tracking-[2px] md:tracking-[4px] uppercase pt-4">
           We create stories that

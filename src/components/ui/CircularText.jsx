@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion, useAnimation, useMotionValue } from 'motion/react';
+import { m, useAnimation, useMotionValue } from 'motion/react';
 
 import './CircularText.css';
 
@@ -86,7 +86,7 @@ const CircularText = ({ text, spinDuration = 20, onHover = 'speedUp', className 
   };
 
   return (
-    <motion.div
+    <m.div
       className={`circular-text ${className}`}
       style={{ rotate: rotation }}
       initial={{ rotate: 0 }}
@@ -106,7 +106,7 @@ const CircularText = ({ text, spinDuration = 20, onHover = 'speedUp', className 
           </span>
         );
       })}
-    </motion.div>
+    </m.div>
   );
 };
 

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { LazyMotion, domAnimation } from "framer-motion"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/home/Footer"
 // @ts-ignore
@@ -15,14 +16,15 @@ const EventsPage = lazy(() => import("@/pages/EventsPage"))
 function App() {
   return (
     <BrowserRouter>
-      <div className="dark min-h-screen bg-background text-foreground relative overflow-x-hidden">
-        <CustomCursor />
-        
-        {/* Global Viewport Blurs */}
-        <GradualBlur preset="page-header" height="5vh" strength={3} zIndex={100} />
-        <GradualBlur preset="page-footer" height="5vh" strength={3} zIndex={100} />
+      <LazyMotion features={domAnimation} strict>
+        <div className="dark min-h-screen bg-background text-foreground relative overflow-x-hidden">
+          <CustomCursor />
+          
+          {/* Global Viewport Blurs */}
+          <GradualBlur preset="page-header" height="5vh" strength={3} zIndex={100} />
+          <GradualBlur preset="page-footer" height="5vh" strength={3} zIndex={100} />
 
-        {/* Sticky Navbar Wrapper - NORMAL (Background & Contact Button) */}
+          {/* Sticky Navbar Wrapper - NORMAL (Background & Contact Button) */}
         <div className="fixed top-0 left-0 w-full z-[1000] pointer-events-none">
           <div className="pointer-events-auto">
             <Navbar layer="normal" />
@@ -44,8 +46,9 @@ function App() {
           </Routes>
         </Suspense>
         
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </LazyMotion>
     </BrowserRouter>
   )
 }

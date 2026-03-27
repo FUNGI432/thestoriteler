@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion, useInView, useSpring, useTransform } from "framer-motion";
+import { m, useInView, useSpring, useTransform } from "framer-motion";
 
 const metrics = [
   { value: 4678, suffix: "+", label: "Textile\nBusiness\nConnected" },
@@ -25,7 +25,7 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 
   const display = useTransform(spring, (current) => Math.round(current) + suffix);
 
-  return <motion.span ref={ref}>{display}</motion.span>;
+  return <m.span ref={ref}>{display}</m.span>;
 }
 
 export default function MetricsSection() {
@@ -51,11 +51,11 @@ export default function MetricsSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
           
           {metrics.map((metric, index) => (
-            <motion.div 
+            <m.div 
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="flex flex-col items-center justify-center p-8 bg-white/[0.03] backdrop-blur-xl rounded-[24px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_32px_rgba(0,0,0,0.5)] aspect-[3/4] border border-white/10 hover:bg-white/[0.05] hover:border-white/20 transition-all duration-500 ease-out group"
             >
@@ -68,7 +68,7 @@ export default function MetricsSection() {
               <p className="text-[28px] lg:text-[42.182px] text-[#bdaee7] font-normal text-center leading-[1.1] whitespace-pre-line group-hover:text-white transition-colors duration-500">
                 {metric.label}
               </p>
-            </motion.div>
+            </m.div>
           ))}
 
         </div>
