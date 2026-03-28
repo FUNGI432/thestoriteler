@@ -9,16 +9,23 @@ import CustomCursor from "@/components/ui/CustomCursor"
 
 import { Suspense, lazy } from "react"
 import Loader from "@/components/ui/Loader"
+import ScrollToTop from "@/components/ui/ScrollToTop"
 
 // Lazy-load the heavy page components to split the bundle
 const Home = lazy(() => import("@/pages/Home"))
 const EventsPage = lazy(() => import("@/pages/EventsPage"))
 const Blogs = lazy(() => import("@/pages/Blogs"))
+const Shoots = lazy(() => import("@/pages/Shoots"))
+const FoundersNote = lazy(() => import("@/pages/FoundersNote"))
+const OurJourney = lazy(() => import("@/pages/OurJourney"))
+const SaathPhere = lazy(() => import("@/pages/SaathPhere"))
+const Marketing = lazy(() => import("@/pages/Marketing"))
 
 function App() {
   return (
     <BrowserRouter>
       <LazyMotion features={domAnimation} strict>
+        <ScrollToTop />
         <div className="dark min-h-screen bg-background text-foreground relative overflow-x-hidden">
           <CustomCursor />
           
@@ -46,6 +53,11 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/blogs" element={<Blogs />} />
+            <Route path="/shoots" element={<Shoots />} />
+            <Route path="/founders-note" element={<FoundersNote />} />
+            <Route path="/our-journey" element={<OurJourney />} />
+            <Route path="/saath-phere" element={<SaathPhere />} />
+            <Route path="/marketing" element={<Marketing />} />
           </Routes>
         </Suspense>
         

@@ -31,7 +31,7 @@ export default function Navbar({ layer = "all" }: NavbarProps) {
           {["Home", "Events", "Blogs", "Saath Pere", "Marketing", "Shoots", "Founder’s Note", "Our Journey"].map((item) => (
             <Link
               key={item}
-              to={item === "Home" ? "/" : item === "Events" ? "/events" : item === "Blogs" ? "/blogs" : `/#${item.toLowerCase().replace("’", "").replace(" ", "-")}`}
+              to={item === "Home" ? "/" : item === "Events" ? "/events" : item === "Blogs" ? "/blogs" : item === "Shoots" ? "/shoots" : item === "Founder’s Note" ? "/founders-note" : item === "Our Journey" ? "/our-journey" : item === "Saath Pere" ? "/saath-phere" : item === "Marketing" ? "/marketing" : `/#${item.toLowerCase().replace("’", "").replace(" ", "-")}`}
               className="text-white font-bold text-[14px] 2xl:text-[16px] tracking-[-0.56px] hover:text-[#ca45ff] transition-colors py-2 px-3 flex items-center uppercase"
             >
               {item}
