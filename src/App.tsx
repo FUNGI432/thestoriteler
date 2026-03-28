@@ -13,6 +13,7 @@ import Loader from "@/components/ui/Loader"
 // Lazy-load the heavy page components to split the bundle
 const Home = lazy(() => import("@/pages/Home"))
 const EventsPage = lazy(() => import("@/pages/EventsPage"))
+const Blogs = lazy(() => import("@/pages/Blogs"))
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/blogs" element={<Blogs />} />
           </Routes>
         </Suspense>
         

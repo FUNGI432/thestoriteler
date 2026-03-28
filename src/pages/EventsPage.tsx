@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { m, useInView, useSpring, useTransform } from "framer-motion";
+import { m, useInView, useSpring, useTransform, AnimatePresence } from "framer-motion";
 
 const AccordionCard = ({ ev, defaultExpanded = false }: { ev: any; defaultExpanded?: boolean }) => {
   const [isHovered, setIsHovered] = useState(defaultExpanded);
@@ -15,36 +15,64 @@ const AccordionCard = ({ ev, defaultExpanded = false }: { ev: any; defaultExpand
       initial={{ flex: defaultExpanded ? 4 : 1 }}
       transition={{ type: "spring", stiffness: 200, damping: 25 }}
     >
-      <div className="w-full h-full bg-[#13101c]/80 backdrop-blur-xl rounded-[30px] p-6 flex flex-col justify-end relative overflow-hidden group">
+      <div className="w-full h-full bg-[#13101c]/80 backdrop-blur-xl rounded-[30px] relative overflow-hidden group flex">
         
-        {/* Abstract glow inside for visual interest */}
-        <div className={`absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[70px] transition-all duration-700 ${isHovered ? "opacity-40 bg-[#ca45ff]" : "opacity-0"}`} />
+        {/* Background Event Image - ONLY when expanded, on the left side */}
+        <AnimatePresence mode="wait">
+          {ev.image && isHovered && (
+            <m.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5, ease: "circOut" }}
+              className="w-[45%] h-full relative z-0 border-r border-white/5"
+            >
+              <img 
+                src={ev.image} 
+                className="w-full h-full object-contain p-4 drop-shadow-[0_0_40px_rgba(202,69,255,0.1)] rounded-[50px]" 
+                alt={ev.name}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#13101c]/20" />
+            </m.div>
+          )}
+        </AnimatePresence>
 
-        <m.div 
-          animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
-          initial={{ opacity: defaultExpanded ? 1 : 0, y: defaultExpanded ? 0 : 20 }}
-          transition={{ duration: 0.3 }}
-          className="flex flex-col gap-2 whitespace-nowrap relative z-10 w-full"
-        >
-          <h4 className="text-[20px] lg:text-[24px] font-bold text-white truncate drop-shadow-md w-full">{ev.name}</h4>
+        {/* Info Content - Moves to the right when expanded */}
+        <div className={`h-full flex flex-col justify-end p-6 md:p-8 relative z-10 transition-all duration-500 ${isHovered ? "w-[55%] flex-1" : "w-full items-center justify-center p-0"}`}>
+          {/* Abstract glow inside for visual interest */}
+          <div className={`absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[70px] transition-all duration-700 ${isHovered ? "opacity-40 bg-[#ca45ff]" : "opacity-0"}`} />
+
+          <m.div 
+            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
+            initial={{ opacity: defaultExpanded ? 1 : 0, y: defaultExpanded ? 0 : 20 }}
+            transition={{ duration: 0.4, delay: isHovered ? 0.2 : 0 }}
+            className={`flex flex-col gap-2 whitespace-nowrap relative z-10 w-full ${!isHovered ? "pointer-events-none" : ""}`}
+          >
+            <h4 className="text-[26px] lg:text-[34px] font-black text-white drop-shadow-md w-full uppercase tracking-tighter mb-4 leading-none">{ev.name}</h4>
+            
+            <div className="flex flex-col text-[14px] lg:text-[15px] space-y-4 mt-2 w-full">
+              {ev.venue && <div className="flex items-center gap-4 bg-white/5 p-4 rounded-3xl border border-white/10 shadow-lg group-hover:bg-white/10 transition-all duration-300"><span className="p-3 bg-white/5 rounded-2xl text-xl">📍</span> <span className="text-[#e2d5ec] font-medium leading-tight"><strong className="text-[#ca45ff] font-bold text-[10px] tracking-[2px] uppercase mb-1 block">OFFICIAL VENUE</strong>{ev.venue}</span></div>}
+              {ev.org && <div className="flex items-center gap-4 bg-white/5 p-4 rounded-3xl border border-white/10 shadow-lg group-hover:bg-white/10 transition-all duration-300"><span className="p-3 bg-white/5 rounded-2xl text-xl">🎯</span> <span className="text-[#bdaee7] font-medium leading-tight"><strong className="text-[#ca45ff] font-bold text-[10px] tracking-[2px] uppercase mb-1 block">ORGANISER</strong>{ev.org}</span></div>}
+              {ev.date && <div className="flex items-center gap-4 bg-white/5 p-4 rounded-3xl border border-white/10 shadow-lg group-hover:bg-white/10 transition-all duration-300"><span className="p-3 bg-white/5 rounded-2xl text-xl">📅</span> <span className="text-[#A69FB6] font-medium leading-tight"><strong className="text-[#ca45ff] font-bold text-[10px] tracking-[2px] uppercase mb-1 block">EVENT DATE</strong>{ev.date}</span></div>}
+            </div>
+          </m.div>
           
-          <div className="flex flex-col text-[13px] lg:text-[15px] space-y-2 mt-2 w-full overflow-hidden text-ellipsis">
-            {ev.venue && <span className="text-[#e2d5ec] truncate"><strong className="text-white">📍 Ven:</strong> {ev.venue}</span>}
-            {ev.org && <span className="text-[#bdaee7] truncate"><strong className="text-white">🎯 Org:</strong> {ev.org}</span>}
-            {ev.date && <span className="text-[#A69FB6] truncate"><strong className="text-white">📅 Dat:</strong> {ev.date}</span>}
-          </div>
-        </m.div>
-        
-        {/* Collapsed Vertical Title */}
-        <m.div 
-           animate={{ opacity: isHovered ? 0 : 1 }}
-           initial={{ opacity: defaultExpanded ? 0 : 1 }}
-           className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        >
-           <h4 className="text-white/50 text-[18px] md:text-[22px] font-medium tracking-widest whitespace-nowrap md:-rotate-90 origin-center truncate w-[250px] md:w-[350px] text-center">
-             {ev.name}
-           </h4>
-        </m.div>
+          {/* Collapsed Vertical Title */}
+          <AnimatePresence>
+            {!isHovered && (
+              <m.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden"
+              >
+                <h4 className="text-white/20 text-[18px] md:text-[20px] font-black tracking-[4px] -rotate-90 origin-center uppercase drop-shadow-sm">
+                  {ev.name}
+                </h4>
+              </m.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </m.div>
   );
@@ -120,7 +148,7 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 
   const display = useTransform(spring, (current) => Math.round(current) + suffix);
 
-  return <m.span ref={ref}>{display}</m.span>;
+  return <m.span ref={ref} className="whitespace-nowrap">{display}</m.span>;
 }
 
 const metrics = [
@@ -134,37 +162,135 @@ const previousEventsByYear = [
   {
     year: "2023",
     events: [
-      { name: "The Designer’s India", org: "KOLKATA FASHION EXPO", date: "", venue: "" },
-      { name: "Kolkata Fabric Expo", org: "THE STORI TELER", date: "April", venue: "Milan Mela, Kolkata" },
+      {
+        name: "Kolkata Couture Expo",
+        org: "Calcutta Saree Dealers Association & The South Calcutta Saree Dealers Welfare Association",
+        date: "25th & 26th August 2023",
+        venue: "Milan Mela, Kolkata"
+      },
     ]
   },
   {
     year: "2024",
     events: [
-      { name: "Bharat Ethnic Expo", org: "GM AGENCY", date: "July", venue: "Gandhi Nagar" },
-      { name: "Delhi Tuff Ethnic Expo", org: "TRUE UNITY ASSOCIATION", date: "July", venue: "Bharat Mandapam, Delhi" },
-      { name: "Kolkata Couture Expo", org: "SAREE ASSOCIATION", date: "", venue: "Milan Mela, Kolkata" },
+      {
+        name: "The Designer’s India",
+        org: "Kolkata Fashion Expo",
+        date: "17th & 18th March 2024",
+        venue: "NSIC, Okhla, New Delhi"
+      },
+      {
+        name: "Kolkata Fabric Expo",
+        org: "The Stori Teler",
+        date: "28th & 29th November 2024",
+        venue: "Biswa Bangla, Eco Park, Kolkata"
+      },
+      {
+        name: "Kolkata Couture Expo",
+        org: "Calcutta Saree Dealers Association & The South Calcutta Saree Dealers Welfare Association",
+        date: "1st & 2nd August 2024",
+        venue: "Milan Mela, Kolkata"
+      },
+      {
+        name: "Surat Fashion Summit",
+        org: "GM Agency",
+        date: "13 & 14 August 2024",
+        venue: "Mahatma Mandir Convention Center"
+      },
     ]
   },
   {
     year: "2025",
     events: [
-      { name: "Kerala Fashion Expo", org: "THE STORI TELER", date: "", venue: "Adlux International Convention Centre, Angamaly, Kerala" },
-      { name: "Signature Drapes by Dolly Jain", org: "THE STORI TELER", date: "", venue: "Avadh Utopia, Surat" },
+      {
+        name: "Kolkata Fabric Expo",
+        org: "The Stori Teler",
+        date: "26th & 27th May 2025",
+        venue: "Biswa Bangla Convention Centre, Kolkata"
+      },
+      {
+        name: "Bharat Ethnic Expo",
+        org: "GM Agency",
+        date: "21st & 22nd July 2025",
+        venue: "Mahatma Mandir, Gandhinagar"
+      },
+      {
+        name: "Delhi Tuff Ethnic Expo",
+        org: "True Unity Group Association",
+        date: "22 & 23 July 2025",
+        venue: "Bharat Mandapam, New Delhi"
+      },
+      {
+        name: "Kolkata Couture Expo",
+        org: "Calcutta Saree Dealers Association & The South Calcutta Saree Dealers Welfare Association",
+        date: "24th & 25th July 2025",
+        venue: "Milan Mela, Kolkata"
+      },
+      {
+        name: "Kerala Fashion Expo",
+        org: "The Stori Teler",
+        date: "Not Specified",
+        venue: "Adlux International Convention Centre, Angamaly, Kerala",
+        image: imgKeralaFashion
+      },
+      {
+        name: "Signature Drapes by Dolly Jain",
+        org: "The Stori Teler",
+        date: "18 December 2025",
+        venue: "Avadh Utopia, Surat"
+      },
     ]
   }
 ];
 
 const upcomingEvents = [
-  { name: "Eco Thread by Saurabh Nivetia", org: "", date: "", venue: "Kolkata" },
-  { name: "South Textile Expo", org: "THE STORI TELER", date: "", venue: "Tripura Vasini, Palace Grounds, Bangalore" },
-  { name: "Bharat Ethnic Expo", org: "GM AGENCY", date: "", venue: "Gandhinagar" },
-  { name: "Delhi Tuff Ethnic Expo", org: "TRUE UNITY ASSOCIATION", date: "", venue: "Bharat Mandapam" },
-  { name: "Kolkata Couture Expo", org: "SAREE ASSOCIATION", date: "", venue: "Milan Mela, Kolkata" },
+  {
+    name: "Eco Threads",
+    org: "Saurabh Nevatia",
+    date: "17th & 18th May 2026",
+    venue: "To be Revealed",
+    image: imgEcoThreads
+  },
+  {
+    name: "South Textile Expo",
+    org: "The Stori Teler",
+    date: "4 & 5 July 2026",
+    venue: "Tripura Vasini, Palace Grounds, Bangalore",
+    image: imgSouthTextile2
+  },
+  {
+    name: "Bharat Ethnic Expo",
+    org: "GM Agency",
+    date: "To be Revealed",
+    venue: "To be Revealed",
+    image: imgBharatEthnic
+  },
+  {
+    name: "Delhi Tuff Ethnic Expo",
+    org: "True Unity Group Association",
+    date: "30 & 31 July 2026",
+    venue: "Bharat Mandapam, New Delhi",
+    image: imgDelhiTuff
+  },
+  {
+    name: "Kolkata Couture Expo",
+    org: "Calcutta Saree Dealers Association & The South Calcutta Saree Dealers Welfare Association",
+    date: "6 & 7 August 2026",
+    venue: "Milan Mela, Kolkata",
+    image: imgKolkataCouture
+  },
 ];
 
 import imgSouthTextile from "@/assets/south textile expo.jpeg"
 import heroVideo from "@/assets/Ideation storiteler website - Whiteboard.mp4"
+
+// New Upcoming Event Images
+import imgEcoThreads from "@/assets/ecothreads.png"
+import imgSouthTextile2 from "@/assets/south textile expo 2.png"
+import imgBharatEthnic from "@/assets/bharat ethnic expo.png"
+import imgDelhiTuff from "@/assets/delhi tuff.png"
+import imgKolkataCouture from "@/assets/Kolkata couture expo.jpeg"
+import imgKeralaFashion from "@/assets/kerala fashion expo.png"
 
 // ... existing code ...
 
@@ -240,21 +366,26 @@ export default function EventsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="flex flex-col items-center justify-center p-8 bg-white/[0.03] backdrop-blur-xl rounded-[24px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_32px_rgba(0,0,0,0.5)] aspect-[3/4] border border-white/10 hover:bg-white/[0.05] hover:border-white/20 transition-all duration-500 ease-out group"
+              className="flex flex-col items-center p-8 bg-white/[0.03] backdrop-blur-xl rounded-[24px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_32px_rgba(0,0,0,0.5)] aspect-[3/4] border border-white/10 hover:bg-white/[0.05] hover:border-white/20 transition-all duration-500 ease-out group"
             >
-              <h2 className="text-[50px] lg:text-[70px] text-white font-medium tracking-[-1px] leading-tight text-center mb-8 drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">
-                {metric.isString ? (
-                  <span>{metric.value}{metric.suffix}</span>
-                ) : (
-                  <AnimatedNumber value={metric.value as number} suffix={metric.suffix} />
-                )}
-              </h2>
+              <div className="flex-1 flex items-center justify-center w-full min-h-[120px] px-2">
+                <h2 className={`text-white font-medium tracking-[-1px] leading-[1.1] text-center drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)] flex items-center justify-center ${metric.isString ? "text-[36px] lg:text-[48px]" : "text-[50px] lg:text-[70px] whitespace-nowrap"}`}>
+                  {metric.isString ? (
+                    <span className="leading-tight">{metric.value}{metric.suffix}</span>
+                  ) : (
+                    <AnimatedNumber value={metric.value as number} suffix={metric.suffix} />
+                  )}
+                </h2>
+              </div>
               
-              <div className="w-full max-w-[260px] h-[1px] bg-gradient-to-r from-transparent via-[#bdaee7]/30 group-hover:via-[#bdaee7]/60 transition-colors duration-500 to-transparent mb-10" />
+              <div className="w-full max-w-[260px] h-[1px] bg-gradient-to-r from-transparent via-[#bdaee7]/30 group-hover:via-[#bdaee7]/60 transition-colors duration-500 to-transparent my-8" />
               
-              <p className="text-[26px] lg:text-[38px] text-[#bdaee7] font-normal text-center leading-[1.1] whitespace-pre-line group-hover:text-white transition-colors duration-500">
-                {metric.label}
-              </p>
+              {/* Label Zone - Fixed Height to align row-wise */}
+              <div className="flex-1 flex items-center justify-center w-full min-h-[100px]">
+                <p className="text-[26px] lg:text-[38px] text-[#bdaee7] font-normal text-center leading-[1.1] whitespace-pre-line group-hover:text-white transition-colors duration-500">
+                  {metric.label}
+                </p>
+              </div>
             </m.div>
           ))}
         </div>
@@ -273,43 +404,78 @@ export default function EventsPage() {
             {/* Spotlight Glows */}
             <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#1c4eff] opacity-20 blur-[100px] rounded-full" />
             
-            <div className="flex-1 flex flex-col space-y-6 relative z-10">
-              <span className="px-4 py-1 rounded-full bg-white/10 border border-white/20 text-[#bdaee7] text-sm uppercase tracking-[2px] w-fit">News Section</span>
+            <div className="flex-1 flex flex-col space-y-8 relative z-10">
+              <div className="flex flex-wrap gap-3">
+                <span className="px-4 py-1 rounded-full bg-white/10 border border-white/20 text-[#bdaee7] text-[12px] uppercase tracking-[2px] w-fit font-semibold">Spotlight 2026</span>
+                <span className="px-4 py-1 rounded-full bg-[#ca45ff]/20 border border-[#ca45ff]/40 text-[#ca45ff] text-[12px] uppercase tracking-[2px] w-fit font-bold">Registration Open</span>
+              </div>
               
-              <h2 className="text-[40px] md:text-[60px] font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-md">
-                South Textile Expo <br/> Pre-Registrations Live!
-              </h2>
-              
-              <p className="text-[18px] text-[#e2d5ec] font-light max-w-xl leading-relaxed">
-                Women’s ethnic wear B2B textile expo. Over 70 top manufacturers from Surat, Ahmedabad, Varanasi, Jaipur, Kolkata, Delhi, Bhagalpur, Mumbai & Bangalore.
-              </p>
+              <div className="space-y-4">
+                <h2 className="text-[40px] md:text-[60px] lg:text-[72px] font-black uppercase leading-[0.95] tracking-tight text-white drop-shadow-2xl">
+                  South Textile <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ca45ff] to-[#1c4eff]">Expo 2026</span>
+                </h2>
+                <h3 className="text-[20px] md:text-[24px] text-[#e2d5ec] font-medium tracking-wide leading-tight max-w-2xl">
+                  South India’s Next Biggest B2B Destination for Women’s Ethnic Wear
+                </h3>
+              </div>
 
-              <div className="flex flex-col space-y-3 mt-4 text-[#868097]">
-                <div className="flex items-start gap-3">
-                  <span className="text-[20px]">📍</span> 
-                  <span className="mt-1">Bangalore (Central hub of South India’s textile trade)</span>
+              <div className="flex flex-col space-y-2">
+                <p className="text-[#fe881b] font-bold text-[18px] uppercase tracking-[2px]">Your next best-selling collections are waiting.</p>
+                <p className="text-[#A69FB6] font-light text-[16px]">Where pan-India manufacturers meet South India’s most powerful buyers</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-6 border-y border-white/10">
+                <div className="flex items-center gap-3">
+                  <span className="text-[22px]">📍</span>
+                  <span className="text-white font-medium">Bangalore</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[20px]">📅</span> 
-                  <span className="mt-1">4th & 5th July 2026</span>
+                  <span className="text-[22px]">📅</span>
+                  <span className="text-white font-medium">4–5 July 2026</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-[20px]">🎯</span> 
-                  <span className="mt-1">Organised by: The Stori Teler</span>
+                <div className="flex items-center gap-3 text-[#ca45ff]">
+                  <span className="text-[18px]">✨</span>
+                  <span className="font-bold uppercase text-[13px] tracking-[1px]">The Stori Teler</span>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/10 mt-6">
-                <p className="text-[14px] text-[#A69FB6] uppercase tracking-[1px] mb-2 font-medium">Focused for Verified Buyers From:</p>
-                <p className="text-white font-light text-[15px] leading-relaxed">
-                  Tamil Nadu | Karnataka | Kerala | Andhra Pradesh | Telangana <br/>
-                  <span className="text-[#ca45ff] font-medium">Retailers, wholesalers, boutique owners, exporters, buying houses</span>
-                </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {["70+ Exhibitors", "Verified Buyers Only", "Pan-India Sourcing"].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-[#bdaee7] text-[14px] font-medium uppercase tracking-[1px]">
+                    <span className="text-[#ca45ff]">✔</span> {item}
+                  </div>
+                ))}
               </div>
 
-              <div className="pt-4 border-t border-white/10">
-                <p className="text-[14px] text-[#A69FB6] uppercase tracking-[1px] mb-2 font-medium">Product Categories:</p>
-                <p className="text-white font-light text-[15px]">Sarees | Unstitched suits | Readymade ethnic wear | Fabrics</p>
+              <div className="space-y-4 pt-4">
+                 <p className="text-white/80 font-bold uppercase tracking-[2px] text-sm">Everything in Women’s Ethnic Wear — Under One Roof</p>
+                 <div className="flex flex-wrap gap-2">
+                   {["Sarees", "Unstitched Suits", "Readymade Ethnic Wear", "Fabrics & Textiles"].map((cat, i) => (
+                     <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded text-[12px] text-[#A69FB6] tracking-wider uppercase font-medium">{cat}</span>
+                   ))}
+                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-white/10">
+                <div className="space-y-3">
+                  <h4 className="text-white font-bold uppercase text-xs tracking-[2px] flex items-center gap-2">
+                    <span className="w-4 h-[1px] bg-[#ca45ff]"></span> Exhibitors
+                  </h4>
+                  <p className="text-[#A69FB6] text-[14px] leading-relaxed">
+                    70+ leading manufacturers showcasing their latest collections.<br/>
+                    <span className="text-white/70 font-medium italic">Surat | Ahmedabad | Varanasi | Jaipur | Kolkata | Delhi | Bhagalpur | Mumbai | Bangalore</span>
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="text-white font-bold uppercase text-xs tracking-[2px] flex items-center gap-2">
+                    <span className="w-4 h-[1px] bg-[#1c4eff]"></span> Buyers
+                  </h4>
+                  <p className="text-[#A69FB6] text-[14px] leading-relaxed">
+                    Curated for South Indian market demand.<br/>
+                    <span className="text-white/70 font-medium italic text-xs uppercase tracking-wider">TN | KA | KL | AP | TS</span><br/>
+                    <span className="text-[#bdaee7]">Retailers | Wholesalers | Boutique Owners | Exporters</span>
+                  </p>
+                </div>
               </div>
 
             </div>
@@ -320,19 +486,37 @@ export default function EventsPage() {
                 <img 
                   src={imgSouthTextile} 
                   alt="South Textile Expo" 
-                  className="relative w-full h-auto rounded-2xl shadow-2xl border border-white/10 object-cover"
+                  className="relative w-full h-[550px] rounded-2xl shadow-2xl border border-white/10 object-cover"
                 />
               </div>
 
-              <a 
-                href="#" 
-                className="w-full text-center px-12 py-5 rounded-full bg-white text-[#13101C] font-black uppercase tracking-[2px] text-[16px] hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
-              >
-                Register Now
-                <span className="block text-[10px] opacity-60 font-medium mt-1">Message Vimal Sir</span>
-              </a>
-            </div>
+              <div className="w-full flex flex-col gap-4">
+                <m.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <p className="text-center text-[#A69FB6] text-[12px] uppercase tracking-[2px] font-bold mb-4">- Pre-Registration is Now Open -</p>
+                  <a 
+                    href="#" 
+                    className="w-full block text-center px-10 py-5 rounded-full bg-gradient-to-r from-[#ca45ff] to-[#1c4eff] text-white font-black uppercase tracking-[2px] text-[16px] hover:scale-105 transition-transform shadow-[0_0_30px_rgba(202,69,255,0.4)]"
+                  >
+                    Pre-Register as Buyer
+                  </a>
+                </m.div>
 
+                <a 
+                  href="#" 
+                  className="w-full text-center px-10 py-4 rounded-full border border-white/20 text-white font-bold uppercase tracking-[2px] text-[14px] hover:bg-white/10 transition-colors"
+                >
+                  Join Waitlist (Exhibitors)
+                </a>
+
+                <p className="text-center text-white/50 text-[11px] leading-tight px-6 italic">
+                  Limited access. Entry for verified B2B buyers only. Are you a textile buyer?
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </m.div>
