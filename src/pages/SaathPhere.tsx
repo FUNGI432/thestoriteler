@@ -4,11 +4,35 @@ import {
   Gem, Palette, MapPin, Tent, Users, Hotel, Music, Settings,
   Network, Award, Heart, Sparkles, Globe
 } from "lucide-react";
-import heroImg from "@/assets/saath-phere/hero.png";
-import decorImg from "@/assets/saath-phere/decor.png";
-import ritualsImg from "@/assets/saath-phere/rituals.png";
+import heroImg from "@/assets/wedding/kamero-2k-RJ0L8387.jpg";
+import wedding1 from "@/assets/wedding/kamero-2k-AMT05955.jpg";
+import wedding2 from "@/assets/wedding/kamero-2k-AMT06271.jpg";
+import wedding3 from "@/assets/wedding/kamero-2k-AMT06310.jpg";
+import wedding4 from "@/assets/wedding/kamero-2k-NFAP9172.jpg";
+import wedding5 from "@/assets/wedding/kamero-2k-NFAP9253.jpg";
+import wedding6 from "@/assets/wedding/kamero-2k-NFAP9394.jpg";
+import wedding7 from "@/assets/wedding/kamero-2k-RJ0L7911.jpg";
+import wedding8 from "@/assets/wedding/kamero-2k-RJ0L8075.jpg";
+import wedding9 from "@/assets/wedding/kamero-2k-RJ0L8097.jpg";
+import wedding10 from "@/assets/wedding/kamero-2k-RJ0L8302.jpg";
+import wedding11 from "@/assets/wedding/kamero-2k-RJ0L8396.jpg";
+import wedding12 from "@/assets/wedding/kamero-2k-RJ0L8544.jpg";
 
 /* ─── Data ─── */
+const galleryImages = [
+  { src: wedding1, span: "md:row-span-1" },
+  { src: wedding2, span: "md:row-span-2" },
+  { src: wedding3, span: "md:row-span-1" },
+  { src: wedding4, span: "md:row-span-2" },
+  { src: wedding5, span: "md:row-span-1" },
+  { src: wedding6, span: "md:row-span-1" },
+  { src: wedding7, span: "md:row-span-1" },
+  { src: wedding8, span: "md:row-span-1" },
+  { src: wedding9, span: "md:row-span-2" },
+  { src: wedding10, span: "md:row-span-1" },
+  { src: wedding11, span: "md:row-span-1" },
+  { src: wedding12, span: "md:row-span-1" },
+];
 const offerings = [
   { title: "End-to-End Wedding Management", desc: "Complete oversight from initial concept to grand finale.", icon: Gem },
   { title: "Concept & Theme Design", desc: "Crafting a unique visual language for your celebration.", icon: Palette },
@@ -67,8 +91,9 @@ export default function SaathPhere() {
         {/* 1. HERO SECTION */}
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0 scale-105">
-            <img src={heroImg} alt="Saath Phere Hero" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#13101C]/80 via-transparent to-[#13101C]" />
+            <img src={heroImg} alt="Saath Phere Hero" className="w-full h-full object-cover brightness-[0.6]" />
+            <div className="absolute inset-0 bg-[#13101C]/40" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#13101C] via-transparent to-[#13101C]" />
           </div>
 
           <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 text-center py-40 mt-10">
@@ -93,7 +118,7 @@ export default function SaathPhere() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.1 }}
-              className="text-[40px] md:text-[80px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.9] mb-10"
+              className="text-[40px] md:text-[80px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.9] mb-10 drop-shadow-[0_10px_40px_rgba(0,0,0,0.8)]"
             >
               Saath phere by <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fe881b] via-[#ca45ff] to-[#fe881b] bg-[length:200%_auto] animate-gradient-flow">The Stori Teler</span>
@@ -103,7 +128,7 @@ export default function SaathPhere() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-[18px] md:text-[26px] text-[#e2d5ec] max-w-3xl mx-auto font-black uppercase tracking-[2px] leading-relaxed mb-6"
+              className="text-[18px] md:text-[26px] text-[#e2d5ec] max-w-3xl mx-auto font-black uppercase tracking-[2px] leading-relaxed mb-6 drop-shadow-lg"
             >
               Curating the celebration of your forever!
             </m.p>
@@ -111,7 +136,7 @@ export default function SaathPhere() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35 }}
-              className="text-[16px] md:text-[20px] text-[#A69FB6] max-w-2xl mx-auto font-light leading-relaxed mb-16 italic"
+              className="text-[16px] md:text-[20px] text-[#A69FB6] max-w-2xl mx-auto font-light leading-relaxed mb-16 italic drop-shadow-md"
             >
               We Handle the Stress on your special day!
             </m.p>
@@ -230,10 +255,10 @@ export default function SaathPhere() {
           </FadeIn>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-             {[heroImg, decorImg, ritualsImg, ritualsImg, heroImg, decorImg].map((img, i) => (
-               <FadeIn key={i} delay={i * 0.1} className={i === 1 || i === 4 ? "row-span-2" : ""}>
+             {galleryImages.map((img, i) => (
+               <FadeIn key={i} delay={i * 0.05} className={img.span}>
                   <div className="h-full rounded-[35px] overflow-hidden border border-white/10 group relative">
-                    <img src={img} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" alt="Gallery" />
+                    <img src={img.src} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" alt="Gallery" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#13101C]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   </div>
                </FadeIn>
